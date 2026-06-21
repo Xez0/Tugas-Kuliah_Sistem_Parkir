@@ -630,7 +630,7 @@ def generate_crud_view(classname, active_nav, fields_xml, fields_java_vars, fiel
             <Property name="alignment" type="int" value="0"/>
             <Property name="horizontalGap" type="int" value="0"/>
             <Property name="verticalGap" type="int" value="0"/>
-          </Property>
+          </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblContentTitle">
               <Properties>

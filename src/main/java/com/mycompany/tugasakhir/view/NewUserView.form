@@ -272,7 +272,7 @@
             <Property name="alignment" type="int" value="0"/>
             <Property name="horizontalGap" type="int" value="0"/>
             <Property name="verticalGap" type="int" value="0"/>
-          </Property>
+          </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblContentTitle">
               <Properties>
@@ -512,7 +512,7 @@
                       <BorderConstraints direction="Center"/>
                     </Constraint>
                   </Constraints>
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignJScrollPaneLayout"/>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tblData">
                       <Properties>
