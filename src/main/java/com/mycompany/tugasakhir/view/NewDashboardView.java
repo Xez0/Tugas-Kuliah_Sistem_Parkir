@@ -25,21 +25,6 @@ public class NewDashboardView extends javax.swing.JFrame {
     private DefaultTableModel tableModel;
     private JButton btnDemo;
     
-    // UI components declared in form
-    private javax.swing.JPanel cardGrid;
-    private javax.swing.JPanel centerPanel;
-    private javax.swing.JLabel lblActiveTitle;
-    private javax.swing.JLabel lblActiveVal;
-    private javax.swing.JLabel lblPetugasTitle;
-    private javax.swing.JLabel lblPetugasVal;
-    private javax.swing.JLabel lblRevTitle;
-    private javax.swing.JLabel lblRevVal;
-    private javax.swing.JLabel lblTableTitle;
-    private javax.swing.JLabel lblTransTitle;
-    private javax.swing.JLabel lblTransVal;
-    private javax.swing.JTable tblRecent;
-    private javax.swing.JPanel tablePanel;
-    
     // Delegation methods
     public JButton getBtnDemo() { return btnDemo; }
     public void addLogoutListener(ActionListener l) {
@@ -548,11 +533,6 @@ public class NewDashboardView extends javax.swing.JFrame {
     private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnUserActionPerformed
-
-    private javax.swing.JPanel pnlCardActive;
-    private javax.swing.JPanel pnlCardPetugas;
-    private javax.swing.JPanel pnlCardRev;
-    private javax.swing.JPanel pnlCardTrans;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler boxSpacer;

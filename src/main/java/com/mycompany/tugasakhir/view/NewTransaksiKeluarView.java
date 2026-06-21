@@ -51,6 +51,7 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
     private javax.swing.JTextArea txtStrukArea;
     private javax.swing.JPanel mainSplitPanel;
     private javax.swing.JPanel titlePanel;
+    private javax.swing.JLabel lblContentTitle;
 
     // delegation methods
     public void resetForm() {

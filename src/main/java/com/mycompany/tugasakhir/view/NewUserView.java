@@ -99,6 +99,7 @@ public class NewUserView extends javax.swing.JFrame {
     }
 
     private void customInit() {
+        java.awt.GridBagConstraints gridBagConstraints;
         
         tableModel = (DefaultTableModel) tblData.getModel();
         com.mycompany.tugasakhir.util.TableUtil.styleTable(tblData);

@@ -39,6 +39,7 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
     private javax.swing.JTable tblActiveParking;
     private javax.swing.JPanel mainSplitPanel;
     private javax.swing.JPanel titlePanel;
+    private javax.swing.JLabel lblContentTitle;
 
     // Public Controller delegation methods
     public void setJenisKendaraanList(java.util.List<com.mycompany.tugasakhir.model.Kendaraan> list) {

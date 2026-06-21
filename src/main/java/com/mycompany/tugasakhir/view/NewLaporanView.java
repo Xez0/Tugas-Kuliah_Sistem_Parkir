@@ -47,6 +47,7 @@ public class NewLaporanView extends javax.swing.JFrame {
     private javax.swing.JLabel lblRevTitle;
     private javax.swing.JPanel mainSplitPanel;
     private javax.swing.JPanel titlePanel;
+    private javax.swing.JLabel lblContentTitle;
 
     // Delegation methods
     public void resetFilters() {
