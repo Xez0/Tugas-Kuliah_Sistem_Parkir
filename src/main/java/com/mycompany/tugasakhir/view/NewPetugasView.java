@@ -31,6 +31,7 @@ public class NewPetugasView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbRole;
     private javax.swing.JTextField txtNoTelp;
     private javax.swing.JComboBox<String> cbStatus;
+    private javax.swing.JLabel lblPasswordHint;
 
     
     // Delegation methods for CRUD views
@@ -61,6 +62,9 @@ public class NewPetugasView extends javax.swing.JFrame {
         cbStatus.setSelectedIndex(0);
         btnDelete.setEnabled(false);
         tblData.clearSelection();
+        if (lblPasswordHint != null) {
+            lblPasswordHint.setText("Password");
+        }
     }
 
     private void fillFormFromSelectedRow(int row) {
@@ -72,6 +76,9 @@ public class NewPetugasView extends javax.swing.JFrame {
         txtNoTelp.setText(tableModel.getValueAt(row, 4) != null ? tableModel.getValueAt(row, 4).toString() : "");
         cbStatus.setSelectedItem(tableModel.getValueAt(row, 5).toString());
         btnDelete.setEnabled(true);
+        if (lblPasswordHint != null) {
+            lblPasswordHint.setText("Password (Kosongkan jika tidak diubah)");
+        }
     }
 
     public void populateTable(java.util.List<com.mycompany.tugasakhir.model.Petugas> list) {
@@ -150,76 +157,7 @@ public class NewPetugasView extends javax.swing.JFrame {
             }
         });
 
-        txtId = new javax.swing.JTextField();
-        txtId.setEnabled(false);
-        txtId.setPreferredSize(new Dimension(0, 32));
-        
-        txtNama = new javax.swing.JTextField();
-        txtNama.setPreferredSize(new Dimension(0, 32));
-        
-        txtUsername = new javax.swing.JTextField();
-        txtUsername.setPreferredSize(new Dimension(0, 32));
-        
-        txtPassword = new javax.swing.JPasswordField();
-        txtPassword.setPreferredSize(new Dimension(0, 32));
-        
-        cbRole = new javax.swing.JComboBox<>(new String[]{"OPERATOR", "ADMIN"});
-        cbRole.setPreferredSize(new Dimension(0, 32));
-        
-        txtNoTelp = new javax.swing.JTextField();
-        txtNoTelp.setPreferredSize(new Dimension(0, 32));
-        
-        cbStatus = new javax.swing.JComboBox<>(new String[]{"AKTIF", "NONAKTIF"});
-        cbStatus.setPreferredSize(new Dimension(0, 32));
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4,0,4,0);
-        formCard.add(new javax.swing.JLabel("ID Petugas (Otomatis)"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 1;
-        formCard.add(txtId, gridBagConstraints);
-
-        gridBagConstraints.gridy = 2;
-        formCard.add(new javax.swing.JLabel("Nama Lengkap"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 3;
-        formCard.add(txtNama, gridBagConstraints);
-
-        gridBagConstraints.gridy = 4;
-        formCard.add(new javax.swing.JLabel("Username"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 5;
-        formCard.add(txtUsername, gridBagConstraints);
-
-        gridBagConstraints.gridy = 6;
-        formCard.add(new javax.swing.JLabel("Password (Kosongkan jika tidak diubah)"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 7;
-        formCard.add(txtPassword, gridBagConstraints);
-
-        gridBagConstraints.gridy = 8;
-        formCard.add(new javax.swing.JLabel("Role"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 9;
-        formCard.add(cbRole, gridBagConstraints);
-
-        gridBagConstraints.gridy = 10;
-        formCard.add(new javax.swing.JLabel("No. Telepon"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 11;
-        formCard.add(txtNoTelp, gridBagConstraints);
-
-        gridBagConstraints.gridy = 12;
-        formCard.add(new javax.swing.JLabel("Status"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 13;
-        formCard.add(cbStatus, gridBagConstraints);
-
-    
-    }
+            }
 
     private void initNavButtonStyles() {
         JButton[] buttons = {btnDashboard, btnMasuk, btnKeluar, btnKendaraan, btnTarif, btnPetugas, btnUser, btnLaporan, btnLogout};
@@ -556,7 +494,7 @@ public class NewPetugasView extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -576,7 +514,7 @@ public class NewPetugasView extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 15;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 5, 0);
@@ -630,13 +568,8 @@ public class NewPetugasView extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
         // Dynamic initialization of inputs to hook Swing builder
         
-        // Column alignment
-        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tblData.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        tblData.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        tblData.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-        tblData.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+        // Alignment moved to customInit()
+
 
         tblData.addMouseListener(new MouseAdapter() {
             @Override
@@ -670,6 +603,8 @@ public class NewPetugasView extends javax.swing.JFrame {
         cbStatus = new javax.swing.JComboBox<>(new String[]{"AKTIF", "NONAKTIF"});
         cbStatus.setPreferredSize(new Dimension(0, 32));
 
+        lblPasswordHint = new javax.swing.JLabel("Password");
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -693,7 +628,7 @@ public class NewPetugasView extends javax.swing.JFrame {
         formCard.add(txtUsername, gridBagConstraints);
 
         gridBagConstraints.gridy = 6;
-        formCard.add(new javax.swing.JLabel("Password (Kosongkan jika tidak diubah)"), gridBagConstraints);
+        formCard.add(lblPasswordHint, gridBagConstraints);
 
         gridBagConstraints.gridy = 7;
         formCard.add(txtPassword, gridBagConstraints);

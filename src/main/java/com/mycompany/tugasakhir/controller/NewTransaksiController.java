@@ -72,17 +72,17 @@ public class NewTransaksiController {
             Kendaraan k = masukView.getSelectedKendaraan();
 
             if (plat.isEmpty()) {
-                JOptionPane.showMessageDialog(masukView, "Plat nomor tidak boleh kosong!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Plat nomor tidak boleh kosong!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (k == null) {
-                JOptionPane.showMessageDialog(masukView, "Jenis kendaraan belum dipilih!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Jenis kendaraan belum dipilih!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             TarifParkir tarif = tarifService.getByJenis(k.getJenisKendaraan());
             if (tarif == null) {
-                JOptionPane.showMessageDialog(masukView, "Tarif progresif untuk jenis kendaraan ini tidak ditemukan!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Tarif progresif untuk jenis kendaraan ini tidak ditemukan!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -90,11 +90,11 @@ public class NewTransaksiController {
             String errorMsg = transaksiService.prosesParkirMasuk(plat, k.getIdKendaraan(), tarif.getIdTarif(), now);
 
             if (errorMsg == null) {
-                JOptionPane.showMessageDialog(masukView, "Kendaraan " + plat + " berhasil masuk!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Kendaraan " + plat + " berhasil masuk!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                 masukView.resetForm();
                 refreshActiveParkingTable();
             } else {
-                JOptionPane.showMessageDialog(masukView, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -104,13 +104,13 @@ public class NewTransaksiController {
         public void actionPerformed(ActionEvent e) {
             String plat = keluarView.getCariPlatInput();
             if (plat.isEmpty()) {
-                JOptionPane.showMessageDialog(keluarView, "Masukkan plat nomor terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Masukkan plat nomor terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             TransaksiParkir t = transaksiService.getActiveByPlat(plat);
             if (t == null) {
-                JOptionPane.showMessageDialog(keluarView, "Kendaraan dengan plat " + plat + " tidak ditemukan di parkiran!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Kendaraan dengan plat " + plat + " tidak ditemukan di parkiran!", "Info", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
@@ -136,7 +136,7 @@ public class NewTransaksiController {
             String errorMsg = transaksiService.prosesParkirKeluar(t.getIdTransaksi(), jamKeluar);
 
             if (errorMsg == null) {
-                JOptionPane.showMessageDialog(keluarView, "Pembayaran berhasil diproses!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Pembayaran berhasil diproses!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                 TransaksiParkir finalTrans = transaksiService.getById(t.getIdTransaksi());
 
                 String receipt = generateReceiptText(finalTrans);
@@ -144,7 +144,7 @@ public class NewTransaksiController {
 
                 refreshActiveParkingTable();
             } else {
-                JOptionPane.showMessageDialog(keluarView, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -155,11 +155,11 @@ public class NewTransaksiController {
             try {
                 boolean done = keluarView.getStrukArea().print();
                 if (done) {
-                    JOptionPane.showMessageDialog(keluarView, "Struk berhasil dikirim ke printer!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Struk berhasil dikirim ke printer!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                     keluarView.resetForm();
                 }
             } catch (PrinterException ex) {
-                JOptionPane.showMessageDialog(keluarView, "Gagal mencetak struk: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Gagal mencetak struk: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

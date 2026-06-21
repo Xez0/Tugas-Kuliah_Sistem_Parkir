@@ -43,6 +43,10 @@ public class DatabaseConnection {
             }
         } catch (SQLException e) {
             System.err.println("[DB] Error reconnecting: " + e.getMessage());
+            throw new RuntimeException("Gagal menyambungkan kembali ke database: " + e.getMessage(), e);
+        }
+        if (connection == null) {
+            throw new RuntimeException("Koneksi database kosong (null). Pastikan server MySQL berjalan.");
         }
         return connection;
     }

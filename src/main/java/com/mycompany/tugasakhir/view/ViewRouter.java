@@ -4,9 +4,11 @@ import com.mycompany.tugasakhir.controller.*;
 import com.mycompany.tugasakhir.service.AuthService;
 import com.mycompany.tugasakhir.util.SessionManager;
 import javax.swing.*;
+import java.awt.CardLayout;
+import java.awt.Dimension;
 
 /**
- * Router untuk mengelola transisi navigasi antar JFrame menu secara mulus dan konsisten.
+ * Router untuk mengelola transisi navigasi antar JPanel secara mulus dan konsisten.
  */
 public class ViewRouter {
     private static NewDashboardView dashboardView;
@@ -18,7 +20,9 @@ public class ViewRouter {
     private static NewUserView userView;
     private static NewLaporanView laporanView;
 
-    private static JFrame currentFrame;
+    private static JFrame mainFrame;
+    private static JPanel cardsPanel;
+    private static CardLayout cardLayout;
 
     public static void initializeAllViews() {
         dashboardView = new NewDashboardView();
@@ -38,6 +42,25 @@ public class ViewRouter {
         new PetugasController(petugasView);
         new UserController(userView);
         new LaporanController(laporanView);
+        
+        mainFrame = new JFrame("Aplikasi Tugas Akhir");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cardLayout = new CardLayout();
+        cardsPanel = new JPanel(cardLayout);
+        mainFrame.setContentPane(cardsPanel);
+        
+        cardsPanel.add(dashboardView.getContentPane(), "DASHBOARD");
+        cardsPanel.add(transaksiMasukView.getContentPane(), "MASUK");
+        cardsPanel.add(transaksiKeluarView.getContentPane(), "KELUAR");
+        cardsPanel.add(kendaraanView.getContentPane(), "KENDARAAN");
+        cardsPanel.add(tarifParkirView.getContentPane(), "TARIF");
+        cardsPanel.add(petugasView.getContentPane(), "PETUGAS");
+        cardsPanel.add(userView.getContentPane(), "USER");
+        cardsPanel.add(laporanView.getContentPane(), "LAPORAN");
+        
+        mainFrame.setMinimumSize(new Dimension(1150, 700));
+        mainFrame.setSize(1200, 750);
+        mainFrame.setLocationRelativeTo(null);
     }
 
     public static void showView(String viewName, JFrame activeFrame) {
@@ -54,44 +77,52 @@ public class ViewRouter {
         }
 
         if (targetFrame != null) {
-            JFrame frameToHide = (activeFrame != null && activeFrame.isVisible()) ? activeFrame : currentFrame;
-            if (frameToHide == null) {
-                frameToHide = currentFrame;
+            mainFrame.setJMenuBar(targetFrame.getJMenuBar());
+            String title = targetFrame.getTitle();
+            mainFrame.setTitle(title != null && !title.isEmpty() ? title : "Aplikasi Tugas Akhir");
+            
+            cardLayout.show(cardsPanel, viewName);
+            
+            if (activeFrame != null && activeFrame != mainFrame && activeFrame.isVisible()) {
+                mainFrame.setExtendedState(activeFrame.getExtendedState());
+                mainFrame.setLocation(activeFrame.getLocation());
+                mainFrame.setSize(activeFrame.getSize());
+                activeFrame.setVisible(false);
+                activeFrame.dispose();
             }
-            if (frameToHide != null && frameToHide != targetFrame) {
-                targetFrame.setLocation(frameToHide.getLocation());
-                targetFrame.setSize(frameToHide.getSize());
-                frameToHide.setVisible(false);
+            
+            if (!mainFrame.isVisible()) {
+                mainFrame.setVisible(true);
             }
-            targetFrame.setVisible(true);
-            currentFrame = targetFrame;
+            
+            mainFrame.revalidate();
+            mainFrame.repaint();
         }
     }
 
     public static JFrame getCurrentFrame() {
-        return currentFrame;
+        return mainFrame;
     }
 
     public static void setCurrentFrame(JFrame frame) {
-        currentFrame = frame;
+        // Obsolete dengan arsitektur single-frame
     }
 
     public static void logout(JFrame activeFrame) {
         int confirm = JOptionPane.showConfirmDialog(
-                activeFrame,
+                mainFrame,
                 "Apakah Anda yakin ingin logout?",
                 "Konfirmasi Logout",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
         if (confirm == JOptionPane.YES_OPTION) {
-            if (activeFrame != null) {
-                activeFrame.dispose();
+            if (mainFrame != null) {
+                mainFrame.dispose();
             }
             disposeAll();
             SessionManager.logout();
             
-            // Buka kembali NewLoginView
             NewLoginView loginView = new NewLoginView();
             new NewLoginController(loginView, new AuthService());
             loginView.setVisible(true);
@@ -107,7 +138,7 @@ public class ViewRouter {
         if (petugasView != null) { petugasView.dispose(); petugasView = null; }
         if (userView != null) { userView.dispose(); userView = null; }
         if (laporanView != null) { laporanView.dispose(); laporanView = null; }
-        currentFrame = null;
+        if (mainFrame != null) { mainFrame.dispose(); mainFrame = null; }
     }
 
     public static NewDashboardView getDashboardView() { return dashboardView; }

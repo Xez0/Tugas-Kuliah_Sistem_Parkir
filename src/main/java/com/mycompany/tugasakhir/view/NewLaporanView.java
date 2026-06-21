@@ -92,7 +92,8 @@ public class NewLaporanView extends javax.swing.JFrame {
                     formatKeluar,
                     durasiStr,
                     biayaStr,
-                    t.getNamaPetugasKeluar()
+                    t.getNamaPetugasMasuk() != null ? t.getNamaPetugasMasuk() : "-",
+                    t.getNamaPetugasKeluar() != null ? t.getNamaPetugasKeluar() : "-"
             });
 
             totalTrans++;
@@ -131,6 +132,7 @@ public class NewLaporanView extends javax.swing.JFrame {
         tblLaporan.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
         tblLaporan.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
         tblLaporan.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
+        tblLaporan.getColumnModel().getColumn(8).setCellRenderer(centerRenderer);
 
         javax.swing.table.DefaultTableCellRenderer rightRenderer = new javax.swing.table.DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -571,11 +573,11 @@ public class NewLaporanView extends javax.swing.JFrame {
         tblLaporan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
             new String [] {
-                "ID Transaksi", "Plat Nomor", "Jenis", "Jam Masuk", "Jam Keluar", "Durasi", "Biaya", "Petugas Keluar"
+                "ID Transaksi", "Plat Nomor", "Jenis", "Jam Masuk", "Jam Keluar", "Durasi", "Biaya", "Petugas Masuk", "Petugas Keluar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];

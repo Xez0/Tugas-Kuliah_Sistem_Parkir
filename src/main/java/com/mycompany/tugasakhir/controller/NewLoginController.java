@@ -35,19 +35,24 @@ public class NewLoginController {
                 return;
             }
 
-            com.mycompany.tugasakhir.model.User loggedInUser = authService.login(username, password);
-            boolean loginSuccess = loggedInUser != null;
-            if (loginSuccess) {
-                // Close login view
-                view.dispose();
+            try {
+                com.mycompany.tugasakhir.model.User loggedInUser = authService.login(username, password);
+                boolean loginSuccess = loggedInUser != null;
+                if (loginSuccess) {
+                    // Close login view
+                    view.dispose();
 
-                // Open dashboard view in Event Dispatch Thread
-                SwingUtilities.invokeLater(() -> {
-                    ViewRouter.initializeAllViews();
-                    ViewRouter.showView("DASHBOARD", null);
-                });
-            } else {
-                view.showErrorMessage("Username atau password salah / akun nonaktif!");
+                    // Open dashboard view in Event Dispatch Thread
+                    SwingUtilities.invokeLater(() -> {
+                        ViewRouter.initializeAllViews();
+                        ViewRouter.showView("DASHBOARD", null);
+                    });
+                } else {
+                    view.showErrorMessage("Username atau password salah / akun nonaktif!");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                view.showErrorMessage("Gagal menghubungkan ke database! Silakan pastikan MySQL server Anda sudah aktif.");
             }
         }
     }

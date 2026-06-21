@@ -41,7 +41,7 @@ public class LaporanController {
         Date endVal = view.getEndDate();
 
         if (startVal == null || endVal == null) {
-            JOptionPane.showMessageDialog(view, "Tanggal mulai dan akhir harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Tanggal mulai dan akhir harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -50,7 +50,7 @@ public class LaporanController {
         LocalDate end = endVal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         if (start.isAfter(end)) {
-            JOptionPane.showMessageDialog(view, "Tanggal mulai tidak boleh melebihi tanggal akhir!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Tanggal mulai tidak boleh melebihi tanggal akhir!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -91,7 +91,7 @@ public class LaporanController {
         public void actionPerformed(ActionEvent e) {
             JTable table = view.getTable();
             if (table.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(view, "Tidak ada data untuk dicetak!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Tidak ada data untuk dicetak!", "Info", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
@@ -102,10 +102,10 @@ public class LaporanController {
                 
                 boolean complete = table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
                 if (complete) {
-                    JOptionPane.showMessageDialog(view, "Laporan berhasil dikirim ke printer!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Laporan berhasil dikirim ke printer!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(view, "Gagal mencetak laporan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Gagal mencetak laporan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

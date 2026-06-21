@@ -45,6 +45,18 @@ public class Tugasakhir {
         // Jalankan database otomatis
         startDatabaseAuto();
 
+        // Tunggu maksimal 5 detik agar MySQL siap menerima koneksi
+        int attempts = 0;
+        while (!isDatabaseRunning() && attempts < 5) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+            attempts++;
+        }
+
         // Setup Look and Feel FlatLaf Light
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());

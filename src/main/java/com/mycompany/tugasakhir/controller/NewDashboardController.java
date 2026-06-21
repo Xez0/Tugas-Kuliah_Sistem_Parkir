@@ -1,7 +1,6 @@
 package com.mycompany.tugasakhir.controller;
 
 import com.mycompany.tugasakhir.model.TransaksiParkir;
-import com.mycompany.tugasakhir.service.NewDemoService;
 import com.mycompany.tugasakhir.service.PetugasService;
 import com.mycompany.tugasakhir.service.TransaksiParkirService;
 import com.mycompany.tugasakhir.view.NewDashboardView;
@@ -23,9 +22,6 @@ public class NewDashboardController {
         this.view = view;
         this.transaksiService = new TransaksiParkirService();
         this.petugasService = new PetugasService();
-
-        // Hubungkan tombol Flying Demo kustom dengan NewDemoService
-        new NewDemoService(view);
 
         // Initial load
         refreshData();

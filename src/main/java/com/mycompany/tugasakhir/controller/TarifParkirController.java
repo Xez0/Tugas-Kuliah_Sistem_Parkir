@@ -57,11 +57,11 @@ public class TarifParkirController {
             }
 
             if (errorMsg == null) {
-                JOptionPane.showMessageDialog(view, "Data tarif berhasil disimpan!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Data tarif berhasil disimpan!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                 view.resetForm();
                 refreshTable();
             } else {
-                JOptionPane.showMessageDialog(view, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -73,8 +73,7 @@ public class TarifParkirController {
             if (idStr.isEmpty()) return;
 
             int id = Integer.parseInt(idStr);
-            int confirm = JOptionPane.showConfirmDialog(
-                    view,
+            int confirm = JOptionPane.showConfirmDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(),
                     "Apakah Anda yakin ingin menghapus data ini?",
                     "Konfirmasi Hapus",
                     JOptionPane.YES_NO_OPTION,
@@ -84,11 +83,11 @@ public class TarifParkirController {
             if (confirm == JOptionPane.YES_OPTION) {
                 String errorMsg = service.delete(id);
                 if (errorMsg == null) {
-                    JOptionPane.showMessageDialog(view, "Data tarif berhasil dihapus!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Data tarif berhasil dihapus!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                     view.resetForm();
                     refreshTable();
                 } else {
-                    JOptionPane.showMessageDialog(view, errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

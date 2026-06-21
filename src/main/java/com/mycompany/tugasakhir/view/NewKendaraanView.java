@@ -153,59 +153,7 @@ public class NewKendaraanView extends javax.swing.JFrame {
         });
         
         // Add components to form card
-        txtId = new javax.swing.JTextField();
-        txtId.setEnabled(false);
-        txtId.setPreferredSize(new Dimension(0, 35));
-        
-        txtJenis = new javax.swing.JTextField();
-        txtJenis.setPreferredSize(new Dimension(0, 35));
-        
-        txtTarifAwal = new javax.swing.JTextField();
-        txtTarifAwal.setPreferredSize(new Dimension(0, 35));
-        
-        txtTarifPerJam = new javax.swing.JTextField();
-        txtTarifPerJam.setPreferredSize(new Dimension(0, 35));
-        
-        cbStatus = new javax.swing.JComboBox<>(new String[]{"AKTIF", "NONAKTIF"});
-        cbStatus.setPreferredSize(new Dimension(0, 35));
-
-        // Layout setup
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5,0,5,0);
-        formCard.add(new javax.swing.JLabel("ID Kendaraan (Otomatis)"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 1;
-        formCard.add(txtId, gridBagConstraints);
-
-        gridBagConstraints.gridy = 2;
-        formCard.add(new javax.swing.JLabel("Jenis Kendaraan"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 3;
-        formCard.add(txtJenis, gridBagConstraints);
-
-        gridBagConstraints.gridy = 4;
-        formCard.add(new javax.swing.JLabel("Tarif Awal (Rp)"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 5;
-        formCard.add(txtTarifAwal, gridBagConstraints);
-
-        gridBagConstraints.gridy = 6;
-        formCard.add(new javax.swing.JLabel("Tarif Per Jam (Rp)"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 7;
-        formCard.add(txtTarifPerJam, gridBagConstraints);
-
-        gridBagConstraints.gridy = 8;
-        formCard.add(new javax.swing.JLabel("Status"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 9;
-        formCard.add(cbStatus, gridBagConstraints);
-
-    
-    }
+            }
 
     private void initNavButtonStyles() {
         JButton[] buttons = {btnDashboard, btnMasuk, btnKeluar, btnKendaraan, btnTarif, btnPetugas, btnUser, btnLaporan, btnLogout};
@@ -616,16 +564,8 @@ public class NewKendaraanView extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
         // Dynamic initialization of inputs to hook Swing builder
         
-        // Column alignment
-        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tblData.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        tblData.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        // Alignment moved to customInit()
 
-        javax.swing.table.DefaultTableCellRenderer rightRenderer = new javax.swing.table.DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-        tblData.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
-        tblData.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
 
         tblData.addMouseListener(new MouseAdapter() {
             @Override
