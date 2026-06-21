@@ -295,7 +295,6 @@ public class NewDashboardView extends javax.swing.JFrame {
         tablePanel = new javax.swing.JPanel();
         lblTableTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblRecent = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Parkir Desktop - Dashboard");
@@ -406,6 +405,7 @@ public class NewDashboardView extends javax.swing.JFrame {
         sidebarPanel.add(btnPetugas, gridBagConstraints);
 
         btnUser.setText("Kelola User");
+        btnUser.addActionListener(this::btnUserActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -425,7 +425,7 @@ public class NewDashboardView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weighty = 1.0;
         sidebarPanel.add(boxSpacer, gridBagConstraints);
 
@@ -526,30 +526,13 @@ public class NewDashboardView extends javax.swing.JFrame {
         centerPanel.add(cardGrid, java.awt.BorderLayout.NORTH);
 
         tablePanel.setBackground(new java.awt.Color(255, 255, 255));
-        tablePanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+        tablePanel.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         tablePanel.setLayout(new java.awt.BorderLayout(10, 10));
 
         lblTableTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblTableTitle.setForeground(new java.awt.Color(26, 26, 46));
         lblTableTitle.setText("Transaksi Parkir Terkini");
         tablePanel.add(lblTableTitle, java.awt.BorderLayout.NORTH);
-
-        tblRecent.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {
-                "ID", "Plat Nomor", "Jenis Kendaraan", "Jam Masuk", "Jam Keluar", "Total Biaya", "Status"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblRecent);
-
         tablePanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         centerPanel.add(tablePanel, java.awt.BorderLayout.CENTER);
@@ -561,6 +544,10 @@ public class NewDashboardView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserActionPerformed
 
     private javax.swing.JPanel pnlCardActive;
     private javax.swing.JPanel pnlCardPetugas;
@@ -599,6 +586,10 @@ public class NewDashboardView extends javax.swing.JFrame {
     private javax.swing.JLabel lblTransTitle;
     private javax.swing.JLabel lblTransVal;
     private javax.swing.JLabel lblUser;
+    private javax.swing.JPanel pnlCardActive;
+    private javax.swing.JPanel pnlCardPetugas;
+    private javax.swing.JPanel pnlCardRev;
+    private javax.swing.JPanel pnlCardTrans;
     private javax.swing.JPanel sidebarPanel;
     private javax.swing.JPanel tablePanel;
     private javax.swing.JTable tblRecent;
