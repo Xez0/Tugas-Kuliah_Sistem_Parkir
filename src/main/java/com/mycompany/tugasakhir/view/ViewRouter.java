@@ -30,34 +30,41 @@ public class ViewRouter {
         userView = new NewUserView();
         laporanView = new NewLaporanView();
 
-        // Register panels ke dashboardView contentArea (CardLayout)
-        dashboardView.registerPanel("MASUK", transaksiMasukView.getTransaksiMasukPanel());
-        dashboardView.registerPanel("KELUAR", transaksiKeluarView.getTransaksiKeluarPanel());
-        dashboardView.registerPanel("KENDARAAN", kendaraanView.getKendaraanPanel());
-        dashboardView.registerPanel("TARIF", tarifParkirView.getTarifParkirPanel());
-        dashboardView.registerPanel("PETUGAS", petugasView.getPetugasPanel());
-        dashboardView.registerPanel("USER", userView.getUserPanel());
-        dashboardView.registerPanel("LAPORAN", laporanView.getLaporanPanel());
-
         // Inisialisasi controller versi baru
         new NewDashboardController(dashboardView.getDashboardPanel(), dashboardView);
-        new NewTransaksiController(transaksiMasukView.getTransaksiMasukPanel(), transaksiKeluarView.getTransaksiKeluarPanel(), dashboardView);
+        new NewTransaksiController(transaksiMasukView.getTransaksiMasukPanel(), transaksiKeluarView.getTransaksiKeluarPanel(), null);
         new KendaraanController(kendaraanView.getKendaraanPanel());
         new TarifParkirController(tarifParkirView.getTarifParkirPanel());
         new PetugasController(petugasView.getPetugasPanel());
         new UserController(userView.getUserPanel());
         new LaporanController(laporanView.getLaporanPanel());
-
-        currentFrame = dashboardView;
     }
 
     public static void showView(String viewName, JFrame activeFrame) {
-        if (dashboardView != null) {
-            dashboardView.showCardOnDashboard(viewName);
-            if (!dashboardView.isVisible()) {
-                dashboardView.setVisible(true);
+        JFrame targetFrame = null;
+        switch (viewName) {
+            case "DASHBOARD" -> targetFrame = dashboardView;
+            case "MASUK" -> targetFrame = transaksiMasukView;
+            case "KELUAR" -> targetFrame = transaksiKeluarView;
+            case "KENDARAAN" -> targetFrame = kendaraanView;
+            case "TARIF" -> targetFrame = tarifParkirView;
+            case "PETUGAS" -> targetFrame = petugasView;
+            case "USER" -> targetFrame = userView;
+            case "LAPORAN" -> targetFrame = laporanView;
+        }
+
+        if (targetFrame != null) {
+            JFrame frameToHide = (activeFrame != null && activeFrame.isVisible()) ? activeFrame : currentFrame;
+            if (frameToHide == null) {
+                frameToHide = currentFrame;
             }
-            currentFrame = dashboardView;
+            if (frameToHide != null && frameToHide != targetFrame) {
+                targetFrame.setLocation(frameToHide.getLocation());
+                targetFrame.setSize(frameToHide.getSize());
+                frameToHide.setVisible(false);
+            }
+            targetFrame.setVisible(true);
+            currentFrame = targetFrame;
         }
     }
 

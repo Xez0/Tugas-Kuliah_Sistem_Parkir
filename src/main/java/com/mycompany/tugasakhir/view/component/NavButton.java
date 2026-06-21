@@ -127,9 +127,12 @@ public class NavButton extends JButton {
 
     @Override
     protected void paintComponent(Graphics g) {
+        if (isOpaque()) {
+            g.setColor(getBackground());
+            g.fillRect(0, 0, getWidth(), getHeight());
+        }
         super.paintComponent(g);
         if (active) {
-            // Draw active vertical indicator bar on the left edge
             g.setColor(activeIndicatorColor);
             g.fillRect(0, 0, 4, getHeight());
         }

@@ -182,18 +182,8 @@ public class NewDashboardView extends javax.swing.JFrame {
         headerPanel.updateUserInfo();
     }
 
-    public void registerPanel(String cardName, JPanel panel) {
-        contentArea.add(panel, cardName);
-    }
-
-    public void showCardOnDashboard(String cardName) {
-        CardLayout cl = (CardLayout) contentArea.getLayout();
-        cl.show(contentArea, cardName);
-        setActiveNavVisual(cardName);
-    }
-
     public void showCard(String cardName) {
-        showCardOnDashboard(cardName);
+        ViewRouter.showView(cardName, this);
     }
 
     private void setActiveNavVisual(String activeCard) {
