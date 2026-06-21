@@ -2,7 +2,7 @@ package com.mycompany.tugasakhir.controller;
 
 import com.mycompany.tugasakhir.model.TransaksiParkir;
 import com.mycompany.tugasakhir.service.TransaksiParkirService;
-import com.mycompany.tugasakhir.view.panel.LaporanPanel;
+import com.mycompany.tugasakhir.view.NewLaporanView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,28 +20,28 @@ import java.util.List;
  */
 public class LaporanController {
 
-    private final LaporanPanel panel;
+    private final NewLaporanView view;
     private final TransaksiParkirService service;
 
-    public LaporanController(LaporanPanel panel) {
-        this.panel = panel;
+    public LaporanController(NewLaporanView view) {
+        this.view = view;
         this.service = new TransaksiParkirService();
 
         // Bind listeners
-        this.panel.addFilterListener(new FilterListener());
-        this.panel.addResetListener(new ResetListener());
-        this.panel.addPrintListener(new PrintListener());
+        this.view.addFilterListener(new FilterListener());
+        this.view.addResetListener(new ResetListener());
+        this.view.addPrintListener(new PrintListener());
 
         // Initial load
         executeFilter();
     }
 
     private void executeFilter() {
-        Date startVal = panel.getStartDate();
-        Date endVal = panel.getEndDate();
+        Date startVal = view.getStartDate();
+        Date endVal = view.getEndDate();
 
         if (startVal == null || endVal == null) {
-            JOptionPane.showMessageDialog(panel, "Tanggal mulai dan akhir harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(view, "Tanggal mulai dan akhir harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -50,13 +50,13 @@ public class LaporanController {
         LocalDate end = endVal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         if (start.isAfter(end)) {
-            JOptionPane.showMessageDialog(panel, "Tanggal mulai tidak boleh melebihi tanggal akhir!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(view, "Tanggal mulai tidak boleh melebihi tanggal akhir!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         // Get matching records
         List<TransaksiParkir> records = service.getByDateRange(start, end);
-        String searchPlat = panel.getSearchPlat();
+        String searchPlat = view.getSearchPlat();
 
         if (!searchPlat.isEmpty()) {
             List<TransaksiParkir> filtered = new ArrayList<>();
@@ -68,7 +68,7 @@ public class LaporanController {
             records = filtered;
         }
 
-        panel.populateTable(records);
+        view.populateTable(records);
     }
 
     private class FilterListener implements ActionListener {
@@ -81,7 +81,7 @@ public class LaporanController {
     private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            panel.resetFilters();
+            view.resetFilters();
             executeFilter();
         }
     }
@@ -89,23 +89,23 @@ public class LaporanController {
     private class PrintListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JTable table = panel.getTable();
+            JTable table = view.getTable();
             if (table.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(panel, "Tidak ada data untuk dicetak!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(view, "Tidak ada data untuk dicetak!", "Info", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
             try {
                 // Style and print layout setup
-                MessageFormat header = new MessageFormat("LAPORAN PENDAPATAN PARKIR (" + panel.getSearchPlat() + ")");
+                MessageFormat header = new MessageFormat("LAPORAN PENDAPATAN PARKIR (" + view.getSearchPlat() + ")");
                 MessageFormat footer = new MessageFormat("Halaman {0}");
                 
                 boolean complete = table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
                 if (complete) {
-                    JOptionPane.showMessageDialog(panel, "Laporan berhasil dikirim ke printer!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(view, "Laporan berhasil dikirim ke printer!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(panel, "Gagal mencetak laporan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view, "Gagal mencetak laporan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

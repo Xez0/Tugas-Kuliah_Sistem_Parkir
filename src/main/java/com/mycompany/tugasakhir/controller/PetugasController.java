@@ -2,7 +2,7 @@ package com.mycompany.tugasakhir.controller;
 
 import com.mycompany.tugasakhir.model.Petugas;
 import com.mycompany.tugasakhir.service.PetugasService;
-import com.mycompany.tugasakhir.view.panel.PetugasPanel;
+import com.mycompany.tugasakhir.view.NewPetugasView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,18 +14,18 @@ import java.util.List;
  */
 public class PetugasController {
 
-    private final PetugasPanel panel;
+    private final NewPetugasView view;
     private final PetugasService service;
 
-    public PetugasController(PetugasPanel panel) {
-        this.panel = panel;
+    public PetugasController(NewPetugasView view) {
+        this.view = view;
         this.service = new PetugasService();
 
         // Bind listeners
-        this.panel.addSaveListener(new SaveListener());
-        this.panel.addDeleteListener(new DeleteListener());
-        this.panel.addResetListener(new ResetListener());
-        this.panel.addSearchListener(new SearchListener());
+        this.view.addSaveListener(new SaveListener());
+        this.view.addDeleteListener(new DeleteListener());
+        this.view.addResetListener(new ResetListener());
+        this.view.addSearchListener(new SearchListener());
 
         // Initial table load
         refreshTable();
@@ -33,19 +33,19 @@ public class PetugasController {
 
     private void refreshTable() {
         List<Petugas> list = service.getAll();
-        panel.populateTable(list);
+        view.populateTable(list);
     }
 
     private class SaveListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String idStr = panel.getIdInput();
-            String nama = panel.getNamaInput();
-            String username = panel.getUsernameInput();
-            String password = panel.getPasswordInput();
-            String role = panel.getRoleInput();
-            String noTelp = panel.getNoTelpInput();
-            String status = panel.getStatusInput();
+            String idStr = view.getIdInput();
+            String nama = view.getNamaInput();
+            String username = view.getUsernameInput();
+            String password = view.getPasswordInput();
+            String role = view.getRoleInput();
+            String noTelp = view.getNoTelpInput();
+            String status = view.getStatusInput();
 
             String errorMsg;
 
@@ -59,11 +59,11 @@ public class PetugasController {
             }
 
             if (errorMsg == null) {
-                JOptionPane.showMessageDialog(panel, "Data petugas berhasil disimpan!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-                panel.resetForm();
+                JOptionPane.showMessageDialog(view, "Data petugas berhasil disimpan!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                view.resetForm();
                 refreshTable();
             } else {
-                JOptionPane.showMessageDialog(panel, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(view, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -71,12 +71,12 @@ public class PetugasController {
     private class DeleteListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String idStr = panel.getIdInput();
+            String idStr = view.getIdInput();
             if (idStr.isEmpty()) return;
 
             int id = Integer.parseInt(idStr);
             int confirm = JOptionPane.showConfirmDialog(
-                    panel,
+                    view,
                     "Apakah Anda yakin ingin menghapus data ini?",
                     "Konfirmasi Hapus",
                     JOptionPane.YES_NO_OPTION,
@@ -86,11 +86,11 @@ public class PetugasController {
             if (confirm == JOptionPane.YES_OPTION) {
                 String errorMsg = service.delete(id);
                 if (errorMsg == null) {
-                    JOptionPane.showMessageDialog(panel, "Data petugas berhasil dihapus!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-                    panel.resetForm();
+                    JOptionPane.showMessageDialog(view, "Data petugas berhasil dihapus!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                    view.resetForm();
                     refreshTable();
                 } else {
-                    JOptionPane.showMessageDialog(panel, errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(view, errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -99,21 +99,21 @@ public class PetugasController {
     private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            panel.resetForm();
+            view.resetForm();
         }
     }
 
     private class SearchListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String query = panel.getSearchInput();
+            String query = view.getSearchInput();
             List<Petugas> result;
             if (query.isEmpty()) {
                 result = service.getAll();
             } else {
                 result = service.search(query);
             }
-            panel.populateTable(result);
+            view.populateTable(result);
         }
     }
 }

@@ -30,14 +30,14 @@ public class ViewRouter {
         userView = new NewUserView();
         laporanView = new NewLaporanView();
 
-        // Inisialisasi controller versi baru
-        new NewDashboardController(dashboardView.getDashboardPanel(), dashboardView);
-        new NewTransaksiController(transaksiMasukView.getTransaksiMasukPanel(), transaksiKeluarView.getTransaksiKeluarPanel(), null);
-        new KendaraanController(kendaraanView.getKendaraanPanel());
-        new TarifParkirController(tarifParkirView.getTarifParkirPanel());
-        new PetugasController(petugasView.getPetugasPanel());
-        new UserController(userView.getUserPanel());
-        new LaporanController(laporanView.getLaporanPanel());
+        // Inisialisasi controller versi baru langsung ke JFrame view
+        new NewDashboardController(dashboardView);
+        new NewTransaksiController(transaksiMasukView, transaksiKeluarView);
+        new KendaraanController(kendaraanView);
+        new TarifParkirController(tarifParkirView);
+        new PetugasController(petugasView);
+        new UserController(userView);
+        new LaporanController(laporanView);
     }
 
     public static void showView(String viewName, JFrame activeFrame) {

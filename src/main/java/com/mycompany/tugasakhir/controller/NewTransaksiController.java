@@ -9,9 +9,8 @@ import com.mycompany.tugasakhir.service.TransaksiParkirService;
 import com.mycompany.tugasakhir.util.CurrencyUtil;
 import com.mycompany.tugasakhir.util.DateTimeUtil;
 import com.mycompany.tugasakhir.util.SessionManager;
-import com.mycompany.tugasakhir.view.NewDashboardView;
-import com.mycompany.tugasakhir.view.panel.TransaksiKeluarPanel;
-import com.mycompany.tugasakhir.view.panel.TransaksiMasukPanel;
+import com.mycompany.tugasakhir.view.NewTransaksiMasukView;
+import com.mycompany.tugasakhir.view.NewTransaksiKeluarView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,32 +25,30 @@ import java.util.List;
  */
 public class NewTransaksiController {
 
-    private final TransaksiMasukPanel masukPanel;
-    private final TransaksiKeluarPanel keluarPanel;
-    private final JFrame parentFrame;
+    private final NewTransaksiMasukView masukView;
+    private final NewTransaksiKeluarView keluarView;
 
     private final TransaksiParkirService transaksiService;
     private final KendaraanService kendaraanService;
     private final TarifParkirService tarifService;
 
-    public NewTransaksiController(TransaksiMasukPanel masukPanel, TransaksiKeluarPanel keluarPanel, JFrame parentFrame) {
-        this.masukPanel = masukPanel;
-        this.keluarPanel = keluarPanel;
-        this.parentFrame = parentFrame;
+    public NewTransaksiController(NewTransaksiMasukView masukView, NewTransaksiKeluarView keluarView) {
+        this.masukView = masukView;
+        this.keluarView = keluarView;
 
         this.transaksiService = new TransaksiParkirService();
         this.kendaraanService = new KendaraanService();
         this.tarifService = new TarifParkirService();
 
         // Bind Transaksi Masuk listeners
-        this.masukPanel.addProsesListener(new ProsesMasukListener());
-        this.masukPanel.addResetListener(e -> masukPanel.resetForm());
+        this.masukView.addProsesListener(new ProsesMasukListener());
+        this.masukView.addResetListener(e -> masukView.resetForm());
 
         // Bind Transaksi Keluar listeners
-        this.keluarPanel.addCariListener(new CariActiveListener());
-        this.keluarPanel.addProsesKeluarListener(new ProsesKeluarListener());
-        this.keluarPanel.addCetakStrukListener(new CetakStrukListener());
-        this.keluarPanel.addResetListener(e -> keluarPanel.resetForm());
+        this.keluarView.addCariListener(new CariActiveListener());
+        this.keluarView.addProsesKeluarListener(new ProsesKeluarListener());
+        this.keluarView.addCetakStrukListener(new CetakStrukListener());
+        this.keluarView.addResetListener(e -> keluarView.resetForm());
 
         // Initial Data Load
         initData();
@@ -59,33 +56,33 @@ public class NewTransaksiController {
 
     private void initData() {
         List<Kendaraan> activeKendaraans = kendaraanService.getAllActive();
-        masukPanel.setJenisKendaraanList(activeKendaraans);
+        masukView.setJenisKendaraanList(activeKendaraans);
         refreshActiveParkingTable();
     }
 
     private void refreshActiveParkingTable() {
         List<TransaksiParkir> activeList = transaksiService.getAllActive();
-        masukPanel.populateActiveParkingTable(activeList);
+        masukView.populateActiveParkingTable(activeList);
     }
 
     private class ProsesMasukListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String plat = masukPanel.getPlatNomorInput();
-            Kendaraan k = masukPanel.getSelectedKendaraan();
+            String plat = masukView.getPlatNomorInput();
+            Kendaraan k = masukView.getSelectedKendaraan();
 
             if (plat.isEmpty()) {
-                JOptionPane.showMessageDialog(masukPanel, "Plat nomor tidak boleh kosong!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(masukView, "Plat nomor tidak boleh kosong!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (k == null) {
-                JOptionPane.showMessageDialog(masukPanel, "Jenis kendaraan belum dipilih!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(masukView, "Jenis kendaraan belum dipilih!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             TarifParkir tarif = tarifService.getByJenis(k.getJenisKendaraan());
             if (tarif == null) {
-                JOptionPane.showMessageDialog(masukPanel, "Tarif progresif untuk jenis kendaraan ini tidak ditemukan!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(masukView, "Tarif progresif untuk jenis kendaraan ini tidak ditemukan!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -93,11 +90,11 @@ public class NewTransaksiController {
             String errorMsg = transaksiService.prosesParkirMasuk(plat, k.getIdKendaraan(), tarif.getIdTarif(), now);
 
             if (errorMsg == null) {
-                JOptionPane.showMessageDialog(masukPanel, "Kendaraan " + plat + " berhasil masuk!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-                masukPanel.resetForm();
+                JOptionPane.showMessageDialog(masukView, "Kendaraan " + plat + " berhasil masuk!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                masukView.resetForm();
                 refreshActiveParkingTable();
             } else {
-                JOptionPane.showMessageDialog(masukPanel, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(masukView, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -105,31 +102,31 @@ public class NewTransaksiController {
     private class CariActiveListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String plat = keluarPanel.getCariPlatInput();
+            String plat = keluarView.getCariPlatInput();
             if (plat.isEmpty()) {
-                JOptionPane.showMessageDialog(keluarPanel, "Masukkan plat nomor terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(keluarView, "Masukkan plat nomor terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             TransaksiParkir t = transaksiService.getActiveByPlat(plat);
             if (t == null) {
-                JOptionPane.showMessageDialog(keluarPanel, "Kendaraan dengan plat " + plat + " tidak ditemukan di parkiran!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(keluarView, "Kendaraan dengan plat " + plat + " tidak ditemukan di parkiran!", "Info", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
-            keluarPanel.setTransaksiData(t);
+            keluarView.setTransaksiData(t);
 
             LocalDateTime now = LocalDateTime.now();
             int durasi = DateTimeUtil.hitungDurasiJam(t.getJamMasuk(), now);
             double biaya = transaksiService.hitungBiayaParkir(t.getTarifAwal(), t.getTarifPerJam(), durasi);
-            keluarPanel.setTotalBiaya(biaya);
+            keluarView.setTotalBiaya(biaya);
         }
     }
 
     private class ProsesKeluarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            TransaksiParkir t = keluarPanel.getActiveTransaksi();
+            TransaksiParkir t = keluarView.getActiveTransaksi();
             if (t == null) return;
 
             LocalDateTime jamKeluar = LocalDateTime.now();
@@ -139,15 +136,15 @@ public class NewTransaksiController {
             String errorMsg = transaksiService.prosesParkirKeluar(t.getIdTransaksi(), jamKeluar);
 
             if (errorMsg == null) {
-                JOptionPane.showMessageDialog(keluarPanel, "Pembayaran berhasil diproses!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(keluarView, "Pembayaran berhasil diproses!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                 TransaksiParkir finalTrans = transaksiService.getById(t.getIdTransaksi());
 
                 String receipt = generateReceiptText(finalTrans);
-                keluarPanel.showStruk(receipt);
+                keluarView.showStruk(receipt);
 
                 refreshActiveParkingTable();
             } else {
-                JOptionPane.showMessageDialog(keluarPanel, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(keluarView, errorMsg, "Peringatan", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -156,13 +153,13 @@ public class NewTransaksiController {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                boolean done = keluarPanel.getStrukArea().print();
+                boolean done = keluarView.getStrukArea().print();
                 if (done) {
-                    JOptionPane.showMessageDialog(keluarPanel, "Struk berhasil dikirim ke printer!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-                    keluarPanel.resetForm();
+                    JOptionPane.showMessageDialog(keluarView, "Struk berhasil dikirim ke printer!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                    keluarView.resetForm();
                 }
             } catch (PrinterException ex) {
-                JOptionPane.showMessageDialog(keluarPanel, "Gagal mencetak struk: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(keluarView, "Gagal mencetak struk: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

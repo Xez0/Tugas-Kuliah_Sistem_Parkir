@@ -6,8 +6,6 @@ import com.mycompany.tugasakhir.model.TarifParkir;
 import com.mycompany.tugasakhir.model.TransaksiParkir;
 import com.mycompany.tugasakhir.util.CurrencyUtil;
 import com.mycompany.tugasakhir.view.NewDashboardView;
-import com.mycompany.tugasakhir.view.panel.TransaksiKeluarPanel;
-import com.mycompany.tugasakhir.view.panel.TransaksiMasukPanel;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -41,8 +39,8 @@ public class NewDemoService {
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
-                TransaksiMasukPanel masukPanel = dashboard.getTransaksiMasukPanel();
-                TransaksiKeluarPanel keluarPanel = dashboard.getTransaksiKeluarPanel();
+                com.mycompany.tugasakhir.view.NewTransaksiMasukView masukPanel = com.mycompany.tugasakhir.view.ViewRouter.getTransaksiMasukView();
+                com.mycompany.tugasakhir.view.NewTransaksiKeluarView keluarPanel = com.mycompany.tugasakhir.view.ViewRouter.getTransaksiKeluarView();
 
                 // ==========================================
                 // TOUR 1: MASTER DATA KENDARAAN (CRUD DEMO)
@@ -50,7 +48,7 @@ public class NewDemoService {
                 SwingUtilities.invokeLater(() -> dashboard.showCard("KENDARAAN"));
                 Thread.sleep(1500);
 
-                com.mycompany.tugasakhir.view.panel.KendaraanPanel kPanel = dashboard.getKendaraanPanel();
+                com.mycompany.tugasakhir.view.NewKendaraanView kPanel = com.mycompany.tugasakhir.view.ViewRouter.getKendaraanView();
                 com.mycompany.tugasakhir.service.KendaraanService kService = new com.mycompany.tugasakhir.service.KendaraanService();
 
                 // 1. CREATE

@@ -5,7 +5,6 @@ import com.mycompany.tugasakhir.service.NewDemoService;
 import com.mycompany.tugasakhir.service.PetugasService;
 import com.mycompany.tugasakhir.service.TransaksiParkirService;
 import com.mycompany.tugasakhir.view.NewDashboardView;
-import com.mycompany.tugasakhir.view.panel.DashboardPanel;
 
 import javax.swing.*;
 import java.util.List;
@@ -15,25 +14,25 @@ import java.util.List;
  */
 public class NewDashboardController {
 
-    private final DashboardPanel panel;
+    private final NewDashboardView view;
     private final TransaksiParkirService transaksiService;
     private final PetugasService petugasService;
     private Timer refreshTimer;
 
-    public NewDashboardController(DashboardPanel panel, NewDashboardView dashboardView) {
-        this.panel = panel;
+    public NewDashboardController(NewDashboardView view) {
+        this.view = view;
         this.transaksiService = new TransaksiParkirService();
         this.petugasService = new PetugasService();
 
         // Hubungkan tombol Flying Demo kustom dengan NewDemoService
-        new NewDemoService(dashboardView);
+        new NewDemoService(view);
 
         // Initial load
         refreshData();
 
         // Setup auto refresh timer tiap 5 detik
         refreshTimer = new Timer(5000, e -> {
-            if (panel.isShowing()) {
+            if (view.isShowing()) {
                 refreshData();
             }
         });
@@ -46,12 +45,12 @@ public class NewDashboardController {
         double todayRevenue = transaksiService.getTodayRevenue();
         int totalPetugas = petugasService.countAll();
 
-        panel.updateStats(activeVehicles, todayTransactions, todayRevenue, totalPetugas);
+        view.updateStats(activeVehicles, todayTransactions, todayRevenue, totalPetugas);
 
         List<TransaksiParkir> allTransactions = transaksiService.getAll();
         int limit = Math.min(allTransactions.size(), 10);
         List<TransaksiParkir> recentTransactions = allTransactions.subList(0, limit);
         
-        panel.populateRecentTable(recentTransactions);
+        view.populateRecentTable(recentTransactions);
     }
 }
