@@ -1,0 +1,17 @@
+# Maven build output
+target/
+
+# Local MySQL data folder
+mysql_data/
+
+# NetBeans files
+nbproject/private/
+build/
+dist/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# OS files
+.DS_Store
+Thumbs.db
