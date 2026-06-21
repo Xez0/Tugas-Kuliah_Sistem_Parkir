@@ -280,6 +280,7 @@ public class NewDashboardView extends javax.swing.JFrame {
         tablePanel = new javax.swing.JPanel();
         lblTableTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        tblRecent = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Parkir Desktop - Dashboard");
@@ -518,6 +519,22 @@ public class NewDashboardView extends javax.swing.JFrame {
         lblTableTitle.setForeground(new java.awt.Color(26, 26, 46));
         lblTableTitle.setText("Transaksi Parkir Terkini");
         tablePanel.add(lblTableTitle, java.awt.BorderLayout.NORTH);
+
+        tblRecent.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "ID", "Plat Nomor", "Jenis Kendaraan", "Jam Masuk", "Jam Keluar", "Total Biaya", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblRecent);
+
         tablePanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         centerPanel.add(tablePanel, java.awt.BorderLayout.CENTER);
