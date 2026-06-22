@@ -94,7 +94,7 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
     public void populateActiveParkingTable(java.util.List<com.mycompany.tugasakhir.model.TransaksiParkir> list) {
         com.mycompany.tugasakhir.util.TableUtil.clearTable(tableModel);
         for (com.mycompany.tugasakhir.model.TransaksiParkir t : list) {
-            String formatMasuk = t.getJamMasuk() != null ? t.getJamMasuk().toString() : "-";
+            String formatMasuk = com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(t.getJamMasuk());
             tableModel.addRow(new Object[]{
                     t.getIdTransaksi(),
                     t.getPlatNomor(),

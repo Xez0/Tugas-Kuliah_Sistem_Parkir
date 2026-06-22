@@ -84,7 +84,7 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         this.activeTransaksi = t;
         txtPlatNomor.setText(t.getPlatNomor());
         txtJenis.setText(t.getJenisKendaraan());
-        txtJamMasuk.setText(t.getJamMasuk().toString());
+        txtJamMasuk.setText(com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(t.getJamMasuk()));
         java.time.LocalDateTime now = java.time.LocalDateTime.now();
         txtJamKeluar.setText(com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(now));
         int durasi = com.mycompany.tugasakhir.util.DateTimeUtil.hitungDurasiJam(t.getJamMasuk(), now);

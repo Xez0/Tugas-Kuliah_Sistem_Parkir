@@ -41,8 +41,8 @@ public class NewDashboardView extends javax.swing.JFrame {
     public void populateRecentTable(java.util.List<com.mycompany.tugasakhir.model.TransaksiParkir> list) {
         com.mycompany.tugasakhir.util.TableUtil.clearTable(tableModel);
         for (com.mycompany.tugasakhir.model.TransaksiParkir t : list) {
-            String formatMasuk = t.getJamMasuk() != null ? t.getJamMasuk().toString() : "-";
-            String formatKeluar = t.getJamKeluar() != null ? t.getJamKeluar().toString() : "-";
+            String formatMasuk = com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(t.getJamMasuk());
+            String formatKeluar = com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(t.getJamKeluar());
             String biaya = t.getStatus().equals("KELUAR") ? com.mycompany.tugasakhir.util.CurrencyUtil.formatRupiah(t.getTotalBiaya()) : "-";
             
             tableModel.addRow(new Object[]{
@@ -85,6 +85,10 @@ public class NewDashboardView extends javax.swing.JFrame {
         tblRecent.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
         tblRecent.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
         tblRecent.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
+
+        // Set column widths so dates aren't truncated
+        tblRecent.getColumnModel().getColumn(3).setPreferredWidth(140);
+        tblRecent.getColumnModel().getColumn(4).setPreferredWidth(140);
 
         javax.swing.table.DefaultTableCellRenderer rightRenderer = new javax.swing.table.DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);

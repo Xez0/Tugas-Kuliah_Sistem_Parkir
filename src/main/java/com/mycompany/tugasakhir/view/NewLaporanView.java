@@ -77,11 +77,19 @@ public class NewLaporanView extends javax.swing.JFrame {
         double totalRev = 0;
 
         for (com.mycompany.tugasakhir.model.TransaksiParkir t : list) {
-            String formatMasuk = t.getJamMasuk() != null ? t.getJamMasuk().toString() : "-";
-            String formatKeluar = t.getJamKeluar() != null ? t.getJamKeluar().toString() : "-";
+            String formatMasuk = com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(t.getJamMasuk());
+            String formatKeluar = com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(t.getJamKeluar());
             String durasiStr = t.getStatus().equals("KELUAR") ? t.getDurasiJam() + " Jam" : "-";
             
-            double biayaValue = t.getStatus().equals("KELUAR") ? t.getTotalBiaya() : 0.0;
+            double biayaValue = 0.0;
+            if (t.getStatus().equals("KELUAR")) {
+                biayaValue = t.getTotalBiaya();
+            } else {
+                // Hitung biaya berjalan untuk kendaraan yang masih parkir
+                int runningDurasi = com.mycompany.tugasakhir.util.DateTimeUtil.hitungDurasiJam(t.getJamMasuk(), com.mycompany.tugasakhir.util.DateTimeUtil.now());
+                if (runningDurasi == 0) runningDurasi = 1; // Minimal 1 jam
+                biayaValue = t.getTarifAwal() + (Math.max(0, runningDurasi - 1) * t.getTarifPerJam());
+            }
             String biayaStr = com.mycompany.tugasakhir.util.CurrencyUtil.formatRupiah(biayaValue);
             
             tableModel.addRow(new Object[]{
@@ -133,6 +141,12 @@ public class NewLaporanView extends javax.swing.JFrame {
         tblLaporan.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
         tblLaporan.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
         tblLaporan.getColumnModel().getColumn(8).setCellRenderer(centerRenderer);
+
+        // Set column widths so dates aren't truncated
+        tblLaporan.getColumnModel().getColumn(3).setPreferredWidth(140);
+        tblLaporan.getColumnModel().getColumn(4).setPreferredWidth(140);
+        tblLaporan.getColumnModel().getColumn(5).setPreferredWidth(70);
+        tblLaporan.getColumnModel().getColumn(6).setPreferredWidth(120);
 
         javax.swing.table.DefaultTableCellRenderer rightRenderer = new javax.swing.table.DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);

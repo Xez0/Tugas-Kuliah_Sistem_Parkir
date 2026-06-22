@@ -113,8 +113,7 @@ public class TransaksiParkirService {
      * - Durasi > 1 jam = tarif_awal + ((durasi - 1) × tarif_per_jam)
      */
     public double hitungBiayaParkir(double tarifAwal, double tarifPerJam, int durasiJam) {
-        if (durasiJam <= 0) return 0;
-        if (durasiJam <= 1) return tarifAwal;
+        if (durasiJam <= 1) return tarifAwal; // Tarif awal berlaku untuk jam pertama (termasuk durasi 0 jam)
         return tarifAwal + ((durasiJam - 1) * tarifPerJam);
     }
 
