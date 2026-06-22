@@ -160,7 +160,7 @@ public class NewPetugasView extends javax.swing.JFrame {
             }
 
     private void initNavButtonStyles() {
-        JButton[] buttons = {btnDashboard, btnMasuk, btnKeluar, btnKendaraan, btnTarif, btnPetugas, btnUser, btnLaporan, btnLogout};
+        JButton[] buttons = {btnDashboard, btnMasuk, btnKeluar, btnKendaraan, btnPetugas, btnUser, btnLaporan, btnLogout};
         Color defaultBg = new Color(26, 26, 46);
         Color defaultFg = new Color(200, 200, 200);
         
@@ -185,8 +185,8 @@ public class NewPetugasView extends javax.swing.JFrame {
         Color activeBg = new Color(15, 52, 96);
         Color activeFg = Color.WHITE;
         
-        JButton[] buttons = {btnDashboard, btnMasuk, btnKeluar, btnKendaraan, btnTarif, btnPetugas, btnUser, btnLaporan};
-        String[] cards = {"DASHBOARD", "MASUK", "KELUAR", "KENDARAAN", "TARIF", "PETUGAS", "USER", "LAPORAN"};
+        JButton[] buttons = {btnDashboard, btnMasuk, btnKeluar, btnKendaraan, btnPetugas, btnUser, btnLaporan};
+        String[] cards = {"DASHBOARD", "MASUK", "KELUAR", "KENDARAAN", "PETUGAS", "USER", "LAPORAN"};
         
         for (int i = 0; i < buttons.length; i++) {
             if (cards[i].equals(activeCard)) {
@@ -205,7 +205,6 @@ public class NewPetugasView extends javax.swing.JFrame {
         btnMasuk.addActionListener(e -> showCard("MASUK"));
         btnKeluar.addActionListener(e -> showCard("KELUAR"));
         btnKendaraan.addActionListener(e -> showCard("KENDARAAN"));
-        btnTarif.addActionListener(e -> showCard("TARIF"));
         btnPetugas.addActionListener(e -> showCard("PETUGAS"));
         btnUser.addActionListener(e -> showCard("USER"));
         btnLaporan.addActionListener(e -> showCard("LAPORAN"));
@@ -216,16 +215,11 @@ public class NewPetugasView extends javax.swing.JFrame {
         JMenuBar menuBar = new JMenuBar();
         menuMasterData = new JMenu("Master Data");
         JMenuItem itemKendaraan = new JMenuItem("Kendaraan");
-        itemKendaraan.addActionListener(e -> showCard("KENDARAAN"));
-        JMenuItem itemTarif = new JMenuItem("Tarif Parkir");
-        itemTarif.addActionListener(e -> showCard("TARIF"));
-        JMenuItem itemPetugas = new JMenuItem("Petugas");
+        itemKendaraan.addActionListener(e -> showCard("KENDARAAN"));JMenuItem itemPetugas = new JMenuItem("Petugas");
         itemPetugas.addActionListener(e -> showCard("PETUGAS"));
         JMenuItem itemUser = new JMenuItem("User");
         itemUser.addActionListener(e -> showCard("USER"));
-        menuMasterData.add(itemKendaraan);
-        menuMasterData.add(itemTarif);
-        menuMasterData.add(itemPetugas);
+        menuMasterData.add(itemKendaraan);menuMasterData.add(itemPetugas);
         menuMasterData.add(itemUser);
 
         JMenu menuTransaksi = new JMenu("Transaksi");
@@ -261,7 +255,6 @@ public class NewPetugasView extends javax.swing.JFrame {
         String role = SessionManager.getCurrentRole();
         if ("OPERATOR".equalsIgnoreCase(role)) {
             btnKendaraan.setVisible(false);
-            btnTarif.setVisible(false);
             btnPetugas.setVisible(false);
             btnUser.setVisible(false);
             btnLaporan.setVisible(false);
@@ -297,7 +290,6 @@ public class NewPetugasView extends javax.swing.JFrame {
         btnMasuk = new javax.swing.JButton();
         btnKeluar = new javax.swing.JButton();
         btnKendaraan = new javax.swing.JButton();
-        btnTarif = new javax.swing.JButton();
         btnPetugas = new javax.swing.JButton();
         btnUser = new javax.swing.JButton();
         btnLaporan = new javax.swing.JButton();
@@ -395,14 +387,12 @@ public class NewPetugasView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         sidebarPanel.add(btnKendaraan, gridBagConstraints);
 
-        btnTarif.setText("Kelola Tarif");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        sidebarPanel.add(btnTarif, gridBagConstraints);
 
         btnPetugas.setText("Kelola Petugas");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -662,7 +652,6 @@ public class NewPetugasView extends javax.swing.JFrame {
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMasuk;
     private javax.swing.JButton btnPetugas;
-    private javax.swing.JButton btnTarif;
     private javax.swing.JButton btnUser;
     private javax.swing.JPanel contentArea;
     private javax.swing.JPanel formCard;

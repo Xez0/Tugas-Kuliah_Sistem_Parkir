@@ -11,8 +11,7 @@ Aplikasi ini menggunakan framework **Java Swing** dengan antarmuka modern berbas
 - **Otomatisasi Database**: Database MySQL lokal akan otomatis dinyalakan di background saat aplikasi pertama kali dijalankan dari NetBeans.
 - **Single Window Navigation**: Perpindahan antarmenu (Dashboard, Transaksi, Master Data, Laporan) berjalan secara instan dan mulus dalam satu frame utama.
 - **Manajemen Master Data (CRUD)**:
-  - 🚗 Kelola Jenis Kendaraan (Motor, Mobil, Truk, dll.)
-  - 💰 Kelola Tarif Parkir (Tarif dasar & tarif progresif per jam)
+  - 🚗 Kelola Jenis Kendaraan & Tarif (Motor, Mobil, Truk dengan tarif dasar & progresif)
   - 👥 Kelola Data Petugas Parkir & Akun User Sistem
 - **Sistem Transaksi Parkir**:
   - ➕ **Parkir Masuk**: Pencatatan plat nomor, jenis kendaraan, dan waktu masuk otomatis.

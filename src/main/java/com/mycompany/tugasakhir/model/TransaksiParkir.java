@@ -11,7 +11,6 @@ public class TransaksiParkir {
     private int idTransaksi;
     private String platNomor;
     private int idKendaraan;
-    private int idTarif;
     private LocalDateTime jamMasuk;
     private LocalDateTime jamKeluar;
     private int durasiJam;
@@ -27,7 +26,6 @@ public class TransaksiParkir {
     private String jenisKendaraan;
     private String namaPetugasMasuk;
     private String namaPetugasKeluar;
-    private String jenisTarif;
 
     // Default constructor
     public TransaksiParkir() {}
@@ -41,9 +39,6 @@ public class TransaksiParkir {
 
     public int getIdKendaraan() { return idKendaraan; }
     public void setIdKendaraan(int idKendaraan) { this.idKendaraan = idKendaraan; }
-
-    public int getIdTarif() { return idTarif; }
-    public void setIdTarif(int idTarif) { this.idTarif = idTarif; }
 
     public LocalDateTime getJamMasuk() { return jamMasuk; }
     public void setJamMasuk(LocalDateTime jamMasuk) { this.jamMasuk = jamMasuk; }
@@ -84,9 +79,6 @@ public class TransaksiParkir {
 
     public String getNamaPetugasKeluar() { return namaPetugasKeluar; }
     public void setNamaPetugasKeluar(String namaPetugasKeluar) { this.namaPetugasKeluar = namaPetugasKeluar; }
-
-    public String getJenisTarif() { return jenisTarif; }
-    public void setJenisTarif(String jenisTarif) { this.jenisTarif = jenisTarif; }
 
     @Override
     public String toString() {

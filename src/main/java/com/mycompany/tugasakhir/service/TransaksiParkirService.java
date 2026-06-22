@@ -1,10 +1,8 @@
 package com.mycompany.tugasakhir.service;
 
 import com.mycompany.tugasakhir.dao.KendaraanDAO;
-import com.mycompany.tugasakhir.dao.TarifParkirDAO;
 import com.mycompany.tugasakhir.dao.TransaksiParkirDAO;
 import com.mycompany.tugasakhir.model.Kendaraan;
-import com.mycompany.tugasakhir.model.TarifParkir;
 import com.mycompany.tugasakhir.model.TransaksiParkir;
 import com.mycompany.tugasakhir.util.DateTimeUtil;
 import com.mycompany.tugasakhir.util.SessionManager;
@@ -22,7 +20,6 @@ public class TransaksiParkirService {
 
     private final TransaksiParkirDAO transaksiDAO = new TransaksiParkirDAO();
     private final KendaraanDAO kendaraanDAO = new KendaraanDAO();
-    private final TarifParkirDAO tarifDAO = new TarifParkirDAO();
 
     public List<TransaksiParkir> getAll() { return transaksiDAO.findAll(); }
     public List<TransaksiParkir> getAllActive() { return transaksiDAO.findAllActive(); }
@@ -41,11 +38,10 @@ public class TransaksiParkirService {
      * Proses parkir masuk.
      * @return pesan error jika gagal, null jika berhasil
      */
-    public String prosesParkirMasuk(String platNomor, int idKendaraan, int idTarif, LocalDateTime jamMasuk) {
+    public String prosesParkirMasuk(String platNomor, int idKendaraan, LocalDateTime jamMasuk, Integer idPetugas) {
         // Validasi
         if (ValidationUtil.isEmpty(platNomor)) return "Plat nomor tidak boleh kosong!";
         if (idKendaraan <= 0) return "Pilih jenis kendaraan!";
-        if (idTarif <= 0) return "Tarif tidak ditemukan!";
         if (jamMasuk == null) return "Jam masuk tidak boleh kosong!";
 
         String platClean = platNomor.toUpperCase().trim();
@@ -55,31 +51,33 @@ public class TransaksiParkirService {
             return "Plat nomor " + platClean + " masih dalam area parkir!";
         }
 
-        // Ambil data kendaraan & tarif
+        // Ambil data kendaraan
         Kendaraan kendaraan = kendaraanDAO.findById(idKendaraan);
         if (kendaraan == null) return "Data kendaraan tidak ditemukan!";
-
-        TarifParkir tarif = tarifDAO.findById(idTarif);
-        if (tarif == null) return "Data tarif tidak ditemukan!";
 
         // Buat transaksi
         TransaksiParkir transaksi = new TransaksiParkir();
         transaksi.setPlatNomor(platClean);
         transaksi.setIdKendaraan(idKendaraan);
-        transaksi.setIdTarif(idTarif);
         transaksi.setJamMasuk(jamMasuk);
-        transaksi.setTarifAwal(tarif.getTarif());
-        transaksi.setTarifPerJam(tarif.getProgresif());
-        transaksi.setIdPetugasMasuk(SessionManager.getCurrentUserId() > 0 ? SessionManager.getCurrentUserId() : null);
+        transaksi.setTarifAwal(kendaraan.getTarifAwal());
+        transaksi.setTarifPerJam(kendaraan.getTarifPerJam());
+        transaksi.setIdPetugasMasuk(idPetugas != null && idPetugas > 0 ? idPetugas : null);
 
-        return transaksiDAO.insert(transaksi) ? null : "Gagal menyimpan transaksi parkir masuk!";
+        boolean success = transaksiDAO.insert(transaksi);
+        if (success) {
+            return null;
+        } else {
+            String dbError = transaksiDAO.getLastError();
+            return "Gagal menyimpan transaksi parkir masuk!" + (dbError != null ? "\nDetail: " + dbError : "");
+        }
     }
 
     /**
      * Proses parkir keluar.
      * @return pesan error jika gagal, null jika berhasil
      */
-    public String prosesParkirKeluar(int idTransaksi, LocalDateTime jamKeluar) {
+    public String prosesParkirKeluar(int idTransaksi, LocalDateTime jamKeluar, Integer idPetugas) {
         if (idTransaksi <= 0) return "Transaksi tidak ditemukan!";
         if (jamKeluar == null) return "Jam keluar tidak boleh kosong!";
 
@@ -102,7 +100,7 @@ public class TransaksiParkirService {
         transaksi.setJamKeluar(jamKeluar);
         transaksi.setDurasiJam(durasi);
         transaksi.setTotalBiaya(totalBiaya);
-        transaksi.setIdPetugasKeluar(SessionManager.getCurrentUserId() > 0 ? SessionManager.getCurrentUserId() : null);
+        transaksi.setIdPetugasKeluar(idPetugas != null && idPetugas > 0 ? idPetugas : null);
 
         return transaksiDAO.updateKeluar(transaksi) ? null : "Gagal memproses parkir keluar!";
     }

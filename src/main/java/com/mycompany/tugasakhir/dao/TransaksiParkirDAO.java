@@ -22,20 +22,19 @@ public class TransaksiParkirDAO {
      * Insert transaksi parkir masuk.
      */
     public boolean insert(TransaksiParkir transaksi) {
-        String sql = "INSERT INTO transaksi_parkir (plat_nomor, id_kendaraan, id_tarif, jam_masuk, "
+        String sql = "INSERT INTO transaksi_parkir (plat_nomor, id_kendaraan, jam_masuk, "
                    + "tarif_awal, tarif_per_jam, id_petugas_masuk, status) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?, 'MASUK')";
+                   + "VALUES (?, ?, ?, ?, ?, ?, 'MASUK')";
         try (PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, transaksi.getPlatNomor());
             ps.setInt(2, transaksi.getIdKendaraan());
-            ps.setInt(3, transaksi.getIdTarif());
-            ps.setTimestamp(4, Timestamp.valueOf(transaksi.getJamMasuk()));
-            ps.setDouble(5, transaksi.getTarifAwal());
-            ps.setDouble(6, transaksi.getTarifPerJam());
+            ps.setTimestamp(3, Timestamp.valueOf(transaksi.getJamMasuk()));
+            ps.setDouble(4, transaksi.getTarifAwal());
+            ps.setDouble(5, transaksi.getTarifPerJam());
             if (transaksi.getIdPetugasMasuk() != null) {
-                ps.setInt(7, transaksi.getIdPetugasMasuk());
+                ps.setInt(6, transaksi.getIdPetugasMasuk());
             } else {
-                ps.setNull(7, Types.INTEGER);
+                ps.setNull(6, Types.INTEGER);
             }
             int affected = ps.executeUpdate();
             if (affected > 0) {
@@ -47,9 +46,15 @@ public class TransaksiParkirDAO {
             }
         } catch (SQLException e) {
             System.err.println("[TransaksiParkirDAO] Insert error: " + e.getMessage());
+            e.printStackTrace();
+            // Store the error message for debugging
+            lastError = e.getMessage();
         }
         return false;
     }
+
+    private String lastError = null;
+    public String getLastError() { return lastError; }
 
     /**
      * Update transaksi parkir keluar.
@@ -283,11 +288,10 @@ public class TransaksiParkirDAO {
      * SELECT query dengan JOIN ke tabel kendaraan, tarif, dan petugas.
      */
     private String getSelectWithJoin() {
-        return "SELECT t.*, k.jenis_kendaraan, tp.jenis AS jenis_tarif, "
+        return "SELECT t.*, k.jenis_kendaraan, "
              + "pm.nama AS nama_petugas_masuk, pk.nama AS nama_petugas_keluar "
              + "FROM transaksi_parkir t "
              + "LEFT JOIN kendaraan k ON t.id_kendaraan = k.id_kendaraan "
-             + "LEFT JOIN tarif_parkir tp ON t.id_tarif = tp.id_tarif "
              + "LEFT JOIN petugas pm ON t.id_petugas_masuk = pm.id_petugas "
              + "LEFT JOIN petugas pk ON t.id_petugas_keluar = pk.id_petugas";
     }
@@ -300,7 +304,6 @@ public class TransaksiParkirDAO {
         t.setIdTransaksi(rs.getInt("id_transaksi"));
         t.setPlatNomor(rs.getString("plat_nomor"));
         t.setIdKendaraan(rs.getInt("id_kendaraan"));
-        t.setIdTarif(rs.getInt("id_tarif"));
 
         Timestamp jamMasuk = rs.getTimestamp("jam_masuk");
         if (jamMasuk != null) t.setJamMasuk(jamMasuk.toLocalDateTime());
@@ -325,7 +328,6 @@ public class TransaksiParkirDAO {
         // Transient fields dari JOIN
         try {
             t.setJenisKendaraan(rs.getString("jenis_kendaraan"));
-            t.setJenisTarif(rs.getString("jenis_tarif"));
             t.setNamaPetugasMasuk(rs.getString("nama_petugas_masuk"));
             t.setNamaPetugasKeluar(rs.getString("nama_petugas_keluar"));
         } catch (SQLException ignored) {

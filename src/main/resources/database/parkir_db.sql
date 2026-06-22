@@ -16,7 +16,6 @@ USE parkir_db;
 -- TABEL 1: users (Akun login sistem)
 -- ============================================================
 DROP TABLE IF EXISTS transaksi_parkir;
-DROP TABLE IF EXISTS tarif_parkir;
 DROP TABLE IF EXISTS kendaraan;
 DROP TABLE IF EXISTS petugas;
 DROP TABLE IF EXISTS users;
@@ -57,24 +56,12 @@ CREATE TABLE kendaraan (
 ) ENGINE=InnoDB;
 
 -- ============================================================
--- TABEL 4: tarif_parkir (Tarif detail + progresif)
--- ============================================================
-CREATE TABLE tarif_parkir (
-    id_tarif   INT AUTO_INCREMENT PRIMARY KEY,
-    jenis      VARCHAR(50)    NOT NULL UNIQUE,
-    tarif      DECIMAL(12,2)  NOT NULL DEFAULT 0,
-    progresif  DECIMAL(12,2)  NOT NULL DEFAULT 0,
-    status     ENUM('AKTIF','NONAKTIF') NOT NULL DEFAULT 'AKTIF'
-) ENGINE=InnoDB;
-
--- ============================================================
--- TABEL 5: transaksi_parkir (Transaksi parkir)
+-- TABEL 4: transaksi_parkir (Transaksi parkir)
 -- ============================================================
 CREATE TABLE transaksi_parkir (
     id_transaksi       INT AUTO_INCREMENT PRIMARY KEY,
     plat_nomor         VARCHAR(20)    NOT NULL,
     id_kendaraan       INT            NOT NULL,
-    id_tarif           INT            NOT NULL,
     jam_masuk          DATETIME       NOT NULL,
     jam_keluar         DATETIME       NULL,
     durasi_jam         INT            DEFAULT 0,
@@ -89,10 +76,6 @@ CREATE TABLE transaksi_parkir (
     -- Foreign Keys
     CONSTRAINT fk_transaksi_kendaraan
         FOREIGN KEY (id_kendaraan) REFERENCES kendaraan(id_kendaraan)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-
-    CONSTRAINT fk_transaksi_tarif
-        FOREIGN KEY (id_tarif) REFERENCES tarif_parkir(id_tarif)
         ON UPDATE CASCADE ON DELETE RESTRICT,
 
     CONSTRAINT fk_transaksi_petugas_masuk
@@ -135,16 +118,10 @@ INSERT INTO kendaraan (jenis_kendaraan, tarif_awal, tarif_per_jam, status) VALUE
 ('Mobil', 5000.00, 3000.00, 'AKTIF'),
 ('Truk', 10000.00, 5000.00, 'AKTIF');
 
--- Tarif Parkir
-INSERT INTO tarif_parkir (jenis, tarif, progresif, status) VALUES
-('Motor', 3000.00, 2000.00, 'AKTIF'),
-('Mobil', 5000.00, 3000.00, 'AKTIF'),
-('Truk', 10000.00, 5000.00, 'AKTIF');
-
 -- Transaksi Parkir (contoh data)
-INSERT INTO transaksi_parkir (plat_nomor, id_kendaraan, id_tarif, jam_masuk, jam_keluar, durasi_jam, tarif_awal, tarif_per_jam, total_biaya, id_petugas_masuk, id_petugas_keluar, status) VALUES
-('B 1234 ABC', 1, 1, '2026-06-12 08:00:00', '2026-06-12 10:00:00', 2, 3000, 2000, 5000, 1, 2, 'KELUAR'),
-('B 5678 DEF', 2, 2, '2026-06-12 09:00:00', '2026-06-12 12:00:00', 3, 5000, 3000, 11000, 1, 2, 'KELUAR'),
-('D 9012 GHI', 1, 1, '2026-06-12 10:00:00', '2026-06-12 11:00:00', 1, 3000, 2000, 3000, 2, 1, 'KELUAR'),
-('F 3456 JKL', 3, 3, '2026-06-12 07:00:00', '2026-06-12 12:00:00', 5, 10000, 5000, 30000, 1, 2, 'KELUAR'),
-('B 7890 MNO', 2, 2, '2026-06-12 14:00:00', NULL, 0, 5000, 3000, 0, 2, NULL, 'MASUK');
+INSERT INTO transaksi_parkir (plat_nomor, id_kendaraan, jam_masuk, jam_keluar, durasi_jam, tarif_awal, tarif_per_jam, total_biaya, id_petugas_masuk, id_petugas_keluar, status) VALUES
+('B 1234 ABC', 1, '2026-06-12 08:00:00', '2026-06-12 10:00:00', 2, 3000, 2000, 5000, 1, 2, 'KELUAR'),
+('B 5678 DEF', 2, '2026-06-12 09:00:00', '2026-06-12 12:00:00', 3, 5000, 3000, 11000, 1, 2, 'KELUAR'),
+('D 9012 GHI', 1, '2026-06-12 10:00:00', '2026-06-12 11:00:00', 1, 3000, 2000, 3000, 2, 1, 'KELUAR'),
+('F 3456 JKL', 3, '2026-06-12 07:00:00', '2026-06-12 12:00:00', 5, 10000, 5000, 30000, 1, 2, 'KELUAR'),
+('B 7890 MNO', 2, '2026-06-12 14:00:00', NULL, 0, 5000, 3000, 0, 2, NULL, 'MASUK');

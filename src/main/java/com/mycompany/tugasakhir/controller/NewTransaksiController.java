@@ -1,10 +1,9 @@
 package com.mycompany.tugasakhir.controller;
 
 import com.mycompany.tugasakhir.model.Kendaraan;
-import com.mycompany.tugasakhir.model.TarifParkir;
 import com.mycompany.tugasakhir.model.TransaksiParkir;
 import com.mycompany.tugasakhir.service.KendaraanService;
-import com.mycompany.tugasakhir.service.TarifParkirService;
+import com.mycompany.tugasakhir.service.PetugasService;
 import com.mycompany.tugasakhir.service.TransaksiParkirService;
 import com.mycompany.tugasakhir.util.CurrencyUtil;
 import com.mycompany.tugasakhir.util.DateTimeUtil;
@@ -30,7 +29,7 @@ public class NewTransaksiController {
 
     private final TransaksiParkirService transaksiService;
     private final KendaraanService kendaraanService;
-    private final TarifParkirService tarifService;
+    private final PetugasService petugasService;
 
     public NewTransaksiController(NewTransaksiMasukView masukView, NewTransaksiKeluarView keluarView) {
         this.masukView = masukView;
@@ -38,7 +37,7 @@ public class NewTransaksiController {
 
         this.transaksiService = new TransaksiParkirService();
         this.kendaraanService = new KendaraanService();
-        this.tarifService = new TarifParkirService();
+        this.petugasService = new PetugasService();
 
         // Bind Transaksi Masuk listeners
         this.masukView.addProsesListener(new ProsesMasukListener());
@@ -57,6 +56,11 @@ public class NewTransaksiController {
     private void initData() {
         List<Kendaraan> activeKendaraans = kendaraanService.getAllActive();
         masukView.setJenisKendaraanList(activeKendaraans);
+        
+        List<com.mycompany.tugasakhir.model.Petugas> activePetugas = petugasService.getAllActive();
+        masukView.setPetugasList(activePetugas);
+        keluarView.setPetugasList(activePetugas);
+        
         refreshActiveParkingTable();
     }
 
@@ -80,14 +84,12 @@ public class NewTransaksiController {
                 return;
             }
 
-            TarifParkir tarif = tarifService.getByJenis(k.getJenisKendaraan());
-            if (tarif == null) {
-                JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Tarif progresif untuk jenis kendaraan ini tidak ditemukan!", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
             LocalDateTime now = LocalDateTime.now();
-            String errorMsg = transaksiService.prosesParkirMasuk(plat, k.getIdKendaraan(), tarif.getIdTarif(), now);
+            
+            com.mycompany.tugasakhir.model.Petugas pMasuk = masukView.getSelectedPetugas();
+            Integer idPetugas = (pMasuk != null) ? pMasuk.getIdPetugas() : SessionManager.getCurrentUserId();
+
+            String errorMsg = transaksiService.prosesParkirMasuk(plat, k.getIdKendaraan(), now, idPetugas);
 
             if (errorMsg == null) {
                 JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Kendaraan " + plat + " berhasil masuk!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
@@ -133,7 +135,10 @@ public class NewTransaksiController {
             int durasi = DateTimeUtil.hitungDurasiJam(t.getJamMasuk(), jamKeluar);
             double biaya = transaksiService.hitungBiayaParkir(t.getTarifAwal(), t.getTarifPerJam(), durasi);
 
-            String errorMsg = transaksiService.prosesParkirKeluar(t.getIdTransaksi(), jamKeluar);
+            com.mycompany.tugasakhir.model.Petugas pKeluar = keluarView.getSelectedPetugas();
+            Integer idPetugas = (pKeluar != null) ? pKeluar.getIdPetugas() : SessionManager.getCurrentUserId();
+
+            String errorMsg = transaksiService.prosesParkirKeluar(t.getIdTransaksi(), jamKeluar, idPetugas);
 
             if (errorMsg == null) {
                 JOptionPane.showMessageDialog(com.mycompany.tugasakhir.view.ViewRouter.getCurrentFrame(), "Pembayaran berhasil diproses!", "Sukses", JOptionPane.INFORMATION_MESSAGE);

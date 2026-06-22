@@ -15,7 +15,6 @@ public class ViewRouter {
     private static NewTransaksiMasukView transaksiMasukView;
     private static NewTransaksiKeluarView transaksiKeluarView;
     private static NewKendaraanView kendaraanView;
-    private static NewTarifParkirView tarifParkirView;
     private static NewPetugasView petugasView;
     private static NewUserView userView;
     private static NewLaporanView laporanView;
@@ -23,22 +22,22 @@ public class ViewRouter {
     private static JFrame mainFrame;
     private static JPanel cardsPanel;
     private static CardLayout cardLayout;
+    
+    private static NewDashboardController dashboardController;
 
     public static void initializeAllViews() {
         dashboardView = new NewDashboardView();
         transaksiMasukView = new NewTransaksiMasukView();
         transaksiKeluarView = new NewTransaksiKeluarView();
         kendaraanView = new NewKendaraanView();
-        tarifParkirView = new NewTarifParkirView();
         petugasView = new NewPetugasView();
         userView = new NewUserView();
         laporanView = new NewLaporanView();
 
         // Inisialisasi controller versi baru langsung ke JFrame view
-        new NewDashboardController(dashboardView);
+        dashboardController = new NewDashboardController(dashboardView);
         new NewTransaksiController(transaksiMasukView, transaksiKeluarView);
         new KendaraanController(kendaraanView);
-        new TarifParkirController(tarifParkirView);
         new PetugasController(petugasView);
         new UserController(userView);
         new LaporanController(laporanView);
@@ -53,7 +52,6 @@ public class ViewRouter {
         cardsPanel.add(transaksiMasukView.getContentPane(), "MASUK");
         cardsPanel.add(transaksiKeluarView.getContentPane(), "KELUAR");
         cardsPanel.add(kendaraanView.getContentPane(), "KENDARAAN");
-        cardsPanel.add(tarifParkirView.getContentPane(), "TARIF");
         cardsPanel.add(petugasView.getContentPane(), "PETUGAS");
         cardsPanel.add(userView.getContentPane(), "USER");
         cardsPanel.add(laporanView.getContentPane(), "LAPORAN");
@@ -70,7 +68,6 @@ public class ViewRouter {
             case "MASUK" -> targetFrame = transaksiMasukView;
             case "KELUAR" -> targetFrame = transaksiKeluarView;
             case "KENDARAAN" -> targetFrame = kendaraanView;
-            case "TARIF" -> targetFrame = tarifParkirView;
             case "PETUGAS" -> targetFrame = petugasView;
             case "USER" -> targetFrame = userView;
             case "LAPORAN" -> targetFrame = laporanView;
@@ -82,6 +79,10 @@ public class ViewRouter {
             mainFrame.setTitle(title != null && !title.isEmpty() ? title : "Aplikasi Tugas Akhir");
             
             cardLayout.show(cardsPanel, viewName);
+            
+            if ("DASHBOARD".equals(viewName) && dashboardController != null) {
+                dashboardController.refreshData();
+            }
             
             if (activeFrame != null && activeFrame != mainFrame && activeFrame.isVisible()) {
                 mainFrame.setExtendedState(activeFrame.getExtendedState());
@@ -134,7 +135,6 @@ public class ViewRouter {
         if (transaksiMasukView != null) { transaksiMasukView.dispose(); transaksiMasukView = null; }
         if (transaksiKeluarView != null) { transaksiKeluarView.dispose(); transaksiKeluarView = null; }
         if (kendaraanView != null) { kendaraanView.dispose(); kendaraanView = null; }
-        if (tarifParkirView != null) { tarifParkirView.dispose(); tarifParkirView = null; }
         if (petugasView != null) { petugasView.dispose(); petugasView = null; }
         if (userView != null) { userView.dispose(); userView = null; }
         if (laporanView != null) { laporanView.dispose(); laporanView = null; }
@@ -145,7 +145,6 @@ public class ViewRouter {
     public static NewTransaksiMasukView getTransaksiMasukView() { return transaksiMasukView; }
     public static NewTransaksiKeluarView getTransaksiKeluarView() { return transaksiKeluarView; }
     public static NewKendaraanView getKendaraanView() { return kendaraanView; }
-    public static NewTarifParkirView getTarifParkirView() { return tarifParkirView; }
     public static NewPetugasView getPetugasView() { return petugasView; }
     public static NewUserView getUserView() { return userView; }
     public static NewLaporanView getLaporanView() { return laporanView; }
