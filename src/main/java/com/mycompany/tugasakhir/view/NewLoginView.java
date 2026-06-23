@@ -200,8 +200,10 @@ public class NewLoginView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 40, 10, 40);
         rightPanel.add(lblError, gridBagConstraints);
 
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnLogin.setText("MASUK");
         btnLogin.setPreferredSize(new java.awt.Dimension(280, 45));
+        btnLogin.addActionListener(this::btnLoginActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
@@ -216,6 +218,11 @@ public class NewLoginView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFooter;
@@ -230,4 +237,5 @@ public class NewLoginView extends javax.swing.JFrame {
     private javax.swing.JPanel rightPanel;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
+    // End of variables declaration//GEN-END:variables
 }

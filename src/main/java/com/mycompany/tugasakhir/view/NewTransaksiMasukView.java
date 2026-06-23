@@ -22,26 +22,8 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
     
     private DefaultTableModel tableModel;
 
-    // Form elements declared visually in form
-    private javax.swing.JLabel lblBanner;
-    private javax.swing.JLabel lblPlatLabel;
-    private javax.swing.JTextField txtPlatNomor;
-    private javax.swing.JLabel lblJenisLabel;
-    private javax.swing.JComboBox<com.mycompany.tugasakhir.model.Kendaraan> cbJenisKendaraan;
     private javax.swing.JLabel lblPetugasLabel;
     private javax.swing.JComboBox<com.mycompany.tugasakhir.model.Petugas> cbPetugasMasuk;
-    private javax.swing.Box.Filler formSpacer;
-    private javax.swing.JPanel buttonPanel;
-    private javax.swing.JButton btnProses;
-    private javax.swing.JButton btnReset;
-    private javax.swing.JPanel formCard;
-    private javax.swing.JPanel tableCard;
-    private javax.swing.JLabel lblTableTitle;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblActiveParking;
-    private javax.swing.JPanel mainSplitPanel;
-    private javax.swing.JPanel titlePanel;
-    private javax.swing.JLabel lblContentTitle;
 
     // Public Controller delegation methods
     public void setJenisKendaraanList(java.util.List<com.mycompany.tugasakhir.model.Kendaraan> list) {
@@ -120,10 +102,53 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
     }
 
     private void customInit() {
+        java.awt.GridBagConstraints gridBagConstraints;
         
         tableModel = (DefaultTableModel) tblActiveParking.getModel();
         com.mycompany.tugasakhir.util.TableUtil.styleTable(tblActiveParking);
         
+        // Initialize petugas combo (not in form designer)
+        lblPetugasLabel = new javax.swing.JLabel("Petugas Masuk");
+        cbPetugasMasuk = new javax.swing.JComboBox<>();
+        cbPetugasMasuk.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        cbPetugasMasuk.setPreferredSize(new Dimension(0, 38));
+
+        // Remove and re-add formSpacer and buttonPanel with shifted gridy
+        formCard.remove(formSpacer);
+        formCard.remove(buttonPanel);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 5, 0);
+        formCard.add(lblPetugasLabel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(cbPetugasMasuk, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        formCard.add(formSpacer, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 5, 0);
+        formCard.add(buttonPanel, gridBagConstraints);
+
         // Alignments
         javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -282,6 +307,23 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         boxSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         btnLogout = new javax.swing.JButton();
         contentArea = new javax.swing.JPanel();
+        titlePanel = new javax.swing.JPanel();
+        lblContentTitle = new javax.swing.JLabel();
+        mainSplitPanel = new javax.swing.JPanel();
+        formCard = new javax.swing.JPanel();
+        lblBanner = new javax.swing.JLabel();
+        lblPlatLabel = new javax.swing.JLabel();
+        txtPlatNomor = new javax.swing.JTextField();
+        lblJenisLabel = new javax.swing.JLabel();
+        cbJenisKendaraan = new javax.swing.JComboBox<>();
+        formSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        buttonPanel = new javax.swing.JPanel();
+        btnProses = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
+        tableCard = new javax.swing.JPanel();
+        lblTableTitle = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblActiveParking = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Parkir Desktop - Parkir Masuk");
@@ -365,6 +407,7 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         sidebarPanel.add(btnKeluar, gridBagConstraints);
 
         btnKendaraan.setText("Kelola Kendaraan");
+        btnKendaraan.addActionListener(this::btnKendaraanActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -372,13 +415,6 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         sidebarPanel.add(btnKendaraan, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
 
         btnPetugas.setText("Kelola Petugas");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -399,6 +435,7 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         sidebarPanel.add(btnUser, gridBagConstraints);
 
         btnLaporan.setText("Laporan");
+        btnLaporan.addActionListener(this::btnLaporanActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
@@ -409,7 +446,7 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weighty = 1.0;
         sidebarPanel.add(boxSpacer, gridBagConstraints);
 
@@ -429,25 +466,6 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         contentArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         contentArea.setLayout(new java.awt.BorderLayout());
 
-        
-        titlePanel = new javax.swing.JPanel();
-        lblContentTitle = new javax.swing.JLabel();
-        mainSplitPanel = new javax.swing.JPanel();
-        formCard = new javax.swing.JPanel();
-        lblBanner = new javax.swing.JLabel();
-        lblPlatLabel = new javax.swing.JLabel();
-        txtPlatNomor = new javax.swing.JTextField();
-        lblJenisLabel = new javax.swing.JLabel();
-        cbJenisKendaraan = new javax.swing.JComboBox<>();
-        formSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        buttonPanel = new javax.swing.JPanel();
-        btnProses = new javax.swing.JButton();
-        btnReset = new javax.swing.JButton();
-        tableCard = new javax.swing.JPanel();
-        lblTableTitle = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblActiveParking = new javax.swing.JTable();
-
         titlePanel.setOpaque(false);
         titlePanel.setPreferredSize(new java.awt.Dimension(0, 40));
         titlePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
@@ -463,8 +481,8 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         mainSplitPanel.setLayout(new java.awt.BorderLayout(15, 15));
 
         formCard.setBackground(new java.awt.Color(255, 255, 255));
-        formCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20)));
         formCard.setPreferredSize(new java.awt.Dimension(320, 0));
+        formCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         formCard.setLayout(new java.awt.GridBagLayout());
 
         lblBanner.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -472,7 +490,8 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         lblBanner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBanner.setText("Entry Parkir Baru");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(8, 0, 8, 0);
@@ -480,7 +499,8 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
 
         lblPlatLabel.setText("Plat Nomor Kendaraan");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 5, 0);
@@ -490,7 +510,8 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         txtPlatNomor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtPlatNomor.setPreferredSize(new java.awt.Dimension(0, 42));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
@@ -498,7 +519,8 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
 
         lblJenisLabel.setText("Jenis Kendaraan");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 5, 0);
@@ -507,34 +529,16 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         cbJenisKendaraan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbJenisKendaraan.setPreferredSize(new java.awt.Dimension(0, 38));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         formCard.add(cbJenisKendaraan, gridBagConstraints);
-
-        lblPetugasLabel = new javax.swing.JLabel();
-        lblPetugasLabel.setText("Petugas Masuk");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 5, 0);
-        formCard.add(lblPetugasLabel, gridBagConstraints);
-
-        cbPetugasMasuk = new javax.swing.JComboBox<>();
-        cbPetugasMasuk.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        cbPetugasMasuk.setPreferredSize(new java.awt.Dimension(0, 38));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
-        formCard.add(cbPetugasMasuk, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         formCard.add(formSpacer, gridBagConstraints);
@@ -549,7 +553,8 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         buttonPanel.add(btnReset);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(20, 0, 5, 0);
@@ -558,7 +563,7 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         mainSplitPanel.add(formCard, java.awt.BorderLayout.WEST);
 
         tableCard.setBackground(new java.awt.Color(255, 255, 255));
-        tableCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+        tableCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         tableCard.setLayout(new java.awt.BorderLayout(10, 10));
 
         lblTableTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -567,7 +572,9 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         tableCard.add(lblTableTitle, java.awt.BorderLayout.NORTH);
 
         tblActiveParking.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
+            new Object [][] {
+
+            },
             new String [] {
                 "ID Transaksi", "Plat Nomor", "Jenis", "Jam Masuk", "Petugas Masuk"
             }
@@ -575,6 +582,7 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
+
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -586,13 +594,20 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
         mainSplitPanel.add(tableCard, java.awt.BorderLayout.CENTER);
 
         contentArea.add(mainSplitPanel, java.awt.BorderLayout.CENTER);
-    
-        
+
         getContentPane().add(contentArea, java.awt.BorderLayout.CENTER);
+
         pack();
         setLocationRelativeTo(null);
-
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnKendaraanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKendaraanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnKendaraanActionPerformed
+
+    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLaporanActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler boxSpacer;
@@ -603,16 +618,33 @@ public class NewTransaksiMasukView extends javax.swing.JFrame {
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMasuk;
     private javax.swing.JButton btnPetugas;
+    private javax.swing.JButton btnProses;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUser;
+    private javax.swing.JPanel buttonPanel;
+    private javax.swing.JComboBox<com.mycompany.tugasakhir.model.Kendaraan> cbJenisKendaraan;
     private javax.swing.JPanel contentArea;
-    private javax.swing.JPanel sidebarPanel;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblAppTitle;
-    private javax.swing.JLabel lblClock;
-    private javax.swing.JLabel lblHeaderTitle;
-    private javax.swing.JLabel lblUser;
+    private javax.swing.JPanel formCard;
+    private javax.swing.Box.Filler formSpacer;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JPanel headerRightPanel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAppTitle;
+    private javax.swing.JLabel lblBanner;
+    private javax.swing.JLabel lblClock;
+    private javax.swing.JLabel lblContentTitle;
+    private javax.swing.JLabel lblHeaderTitle;
+    private javax.swing.JLabel lblJenisLabel;
+    private javax.swing.JLabel lblPlatLabel;
+    private javax.swing.JLabel lblTableTitle;
+    private javax.swing.JLabel lblUser;
+    private javax.swing.JPanel mainSplitPanel;
+    private javax.swing.JPanel sidebarPanel;
+    private javax.swing.JPanel tableCard;
+    private javax.swing.JTable tblActiveParking;
+    private javax.swing.JPanel titlePanel;
+    private javax.swing.JTextField txtPlatNomor;
     // End of variables declaration//GEN-END:variables
     
 }

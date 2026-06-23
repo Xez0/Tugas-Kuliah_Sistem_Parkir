@@ -22,32 +22,7 @@ public class NewLaporanView extends javax.swing.JFrame {
     
     private DefaultTableModel tableModel;
 
-    // UI elements declared in form
-    private com.toedter.calendar.JDateChooser dateStart;
-    private com.toedter.calendar.JDateChooser dateEnd;
-    private javax.swing.JTextField txtSearchPlat;
-    private javax.swing.JButton btnFilter;
-    private javax.swing.JButton btnReset;
-    private javax.swing.JButton btnPrint;
-    private javax.swing.JTable tblLaporan;
-    private javax.swing.JLabel lblTotalTransactions;
-    private javax.swing.JLabel lblTotalRevenue;
 
-    private javax.swing.JLabel lblStart;
-    private javax.swing.JLabel lblEnd;
-    private javax.swing.JLabel lblSearchPlat;
-    private javax.swing.JPanel filterCard;
-    private javax.swing.JPanel tableCard;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel summaryPanel;
-    private javax.swing.JPanel infoGrid;
-    private javax.swing.JPanel transCard;
-    private javax.swing.JLabel lblTransTitle;
-    private javax.swing.JPanel revCard;
-    private javax.swing.JLabel lblRevTitle;
-    private javax.swing.JPanel mainSplitPanel;
-    private javax.swing.JPanel titlePanel;
-    private javax.swing.JLabel lblContentTitle;
 
     // Delegation methods
     public void resetFilters() {
@@ -309,6 +284,30 @@ public class NewLaporanView extends javax.swing.JFrame {
         boxSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         btnLogout = new javax.swing.JButton();
         contentArea = new javax.swing.JPanel();
+        titlePanel = new javax.swing.JPanel();
+        lblContentTitle = new javax.swing.JLabel();
+        mainSplitPanel = new javax.swing.JPanel();
+        filterCard = new javax.swing.JPanel();
+        lblStart = new javax.swing.JLabel();
+        dateStart = new com.toedter.calendar.JDateChooser();
+        lblEnd = new javax.swing.JLabel();
+        dateEnd = new com.toedter.calendar.JDateChooser();
+        lblSearchPlat = new javax.swing.JLabel();
+        txtSearchPlat = new javax.swing.JTextField();
+        btnFilter = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
+        btnPrint = new javax.swing.JButton();
+        tableCard = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblLaporan = new javax.swing.JTable();
+        summaryPanel = new javax.swing.JPanel();
+        infoGrid = new javax.swing.JPanel();
+        transCard = new javax.swing.JPanel();
+        lblTransTitle = new javax.swing.JLabel();
+        lblTotalTransactions = new javax.swing.JLabel();
+        revCard = new javax.swing.JPanel();
+        lblRevTitle = new javax.swing.JLabel();
+        lblTotalRevenue = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Parkir Desktop - Laporan");
@@ -383,6 +382,7 @@ public class NewLaporanView extends javax.swing.JFrame {
         sidebarPanel.add(btnMasuk, gridBagConstraints);
 
         btnKeluar.setText("Parkir Keluar");
+        btnKeluar.addActionListener(this::btnKeluarActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -399,13 +399,6 @@ public class NewLaporanView extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         sidebarPanel.add(btnKendaraan, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
 
         btnPetugas.setText("Kelola Petugas");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -426,6 +419,7 @@ public class NewLaporanView extends javax.swing.JFrame {
         sidebarPanel.add(btnUser, gridBagConstraints);
 
         btnLaporan.setText("Laporan");
+        btnLaporan.addActionListener(this::btnLaporanActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
@@ -436,7 +430,7 @@ public class NewLaporanView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weighty = 1.0;
         sidebarPanel.add(boxSpacer, gridBagConstraints);
 
@@ -456,32 +450,6 @@ public class NewLaporanView extends javax.swing.JFrame {
         contentArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         contentArea.setLayout(new java.awt.BorderLayout());
 
-        
-        titlePanel = new javax.swing.JPanel();
-        lblContentTitle = new javax.swing.JLabel();
-        mainSplitPanel = new javax.swing.JPanel();
-        filterCard = new javax.swing.JPanel();
-        lblStart = new javax.swing.JLabel();
-        dateStart = new com.toedter.calendar.JDateChooser();
-        lblEnd = new javax.swing.JLabel();
-        dateEnd = new com.toedter.calendar.JDateChooser();
-        lblSearchPlat = new javax.swing.JLabel();
-        txtSearchPlat = new javax.swing.JTextField();
-        btnFilter = new javax.swing.JButton();
-        btnReset = new javax.swing.JButton();
-        btnPrint = new javax.swing.JButton();
-        tableCard = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblLaporan = new javax.swing.JTable();
-        summaryPanel = new javax.swing.JPanel();
-        infoGrid = new javax.swing.JPanel();
-        transCard = new javax.swing.JPanel();
-        lblTransTitle = new javax.swing.JLabel();
-        lblTotalTransactions = new javax.swing.JLabel();
-        revCard = new javax.swing.JPanel();
-        lblRevTitle = new javax.swing.JLabel();
-        lblTotalRevenue = new javax.swing.JLabel();
-
         titlePanel.setOpaque(false);
         titlePanel.setPreferredSize(new java.awt.Dimension(0, 40));
         titlePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
@@ -497,70 +465,96 @@ public class NewLaporanView extends javax.swing.JFrame {
         mainSplitPanel.setLayout(new java.awt.BorderLayout(15, 15));
 
         filterCard.setBackground(new java.awt.Color(255, 255, 255));
-        filterCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(12, 15, 12, 15)));
-        filterCard.setLayout(new java.awt.BorderLayout(0, 10));
-
-        // --- Row 1: Input fields (centered) ---
-        javax.swing.JPanel inputRow = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
-        inputRow.setOpaque(false);
+        filterCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        filterCard.setLayout(new java.awt.GridBagLayout());
 
         lblStart.setText("Mulai Tanggal:");
-        lblStart.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 13));
-        inputRow.add(lblStart);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(lblStart, gridBagConstraints);
 
         dateStart.setDateFormatString("yyyy-MM-dd");
-        dateStart.setPreferredSize(new java.awt.Dimension(140, 32));
-        inputRow.add(dateStart);
+        dateStart.setPreferredSize(new java.awt.Dimension(130, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(dateStart, gridBagConstraints);
 
         lblEnd.setText("Sampai Tanggal:");
-        lblEnd.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 13));
-        inputRow.add(lblEnd);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(lblEnd, gridBagConstraints);
 
         dateEnd.setDateFormatString("yyyy-MM-dd");
-        dateEnd.setPreferredSize(new java.awt.Dimension(140, 32));
-        inputRow.add(dateEnd);
-
-        // Move Cari Plat to the second row
-
-
-        filterCard.add(inputRow, java.awt.BorderLayout.NORTH);
-
-        // --- Row 2: Buttons (centered) ---
-        javax.swing.JPanel buttonRow = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 5));
-        buttonRow.setOpaque(false);
+        dateEnd.setPreferredSize(new java.awt.Dimension(130, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(dateEnd, gridBagConstraints);
 
         lblSearchPlat.setText("Cari Plat:");
-        lblSearchPlat.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 13));
-        buttonRow.add(lblSearchPlat);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(lblSearchPlat, gridBagConstraints);
 
-        txtSearchPlat.setPreferredSize(new java.awt.Dimension(130, 32));
-        buttonRow.add(txtSearchPlat);
-
-        // Add a small spacer
-        buttonRow.add(new javax.swing.JLabel("   "));
+        txtSearchPlat.setPreferredSize(new java.awt.Dimension(110, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(txtSearchPlat, gridBagConstraints);
 
         btnFilter.setText("FILTER");
-        btnFilter.setPreferredSize(new java.awt.Dimension(110, 35));
-        buttonRow.add(btnFilter);
+        btnFilter.setPreferredSize(new java.awt.Dimension(95, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(btnFilter, gridBagConstraints);
 
         btnReset.setText("RESET");
-        btnReset.setPreferredSize(new java.awt.Dimension(110, 35));
-        buttonRow.add(btnReset);
+        btnReset.setPreferredSize(new java.awt.Dimension(95, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(btnReset, gridBagConstraints);
 
         btnPrint.setText("PRINT");
-        btnPrint.setPreferredSize(new java.awt.Dimension(110, 35));
-        buttonRow.add(btnPrint);
-
-        filterCard.add(buttonRow, java.awt.BorderLayout.SOUTH);
+        btnPrint.setPreferredSize(new java.awt.Dimension(95, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        filterCard.add(btnPrint, gridBagConstraints);
 
         mainSplitPanel.add(filterCard, java.awt.BorderLayout.NORTH);
 
         tableCard.setBackground(new java.awt.Color(255, 255, 255));
-        tableCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+        tableCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         tableCard.setLayout(new java.awt.BorderLayout());
 
         tblLaporan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
+            new Object [][] {
+
+            },
             new String [] {
                 "ID Transaksi", "Plat Nomor", "Jenis", "Jam Masuk", "Jam Keluar", "Durasi", "Biaya", "Petugas Masuk", "Petugas Keluar"
             }
@@ -568,24 +562,24 @@ public class NewLaporanView extends javax.swing.JFrame {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
             };
+
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tblLaporan);
 
-        tableCard.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        tableCard.add(jScrollPane1);
 
         mainSplitPanel.add(tableCard, java.awt.BorderLayout.CENTER);
 
-        summaryPanel.setOpaque(false);
         summaryPanel.setLayout(new java.awt.BorderLayout());
 
         infoGrid.setOpaque(false);
         infoGrid.setLayout(new java.awt.GridLayout(1, 2, 20, 20));
 
         transCard.setBackground(new java.awt.Color(255, 255, 255));
-        transCard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)));
+        transCard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         transCard.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 15));
 
         lblTransTitle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -600,7 +594,7 @@ public class NewLaporanView extends javax.swing.JFrame {
         infoGrid.add(transCard);
 
         revCard.setBackground(new java.awt.Color(255, 255, 255));
-        revCard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)));
+        revCard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         revCard.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 15));
 
         lblRevTitle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -619,33 +613,64 @@ public class NewLaporanView extends javax.swing.JFrame {
         mainSplitPanel.add(summaryPanel, java.awt.BorderLayout.SOUTH);
 
         contentArea.add(mainSplitPanel, java.awt.BorderLayout.CENTER);
-    
-        
+
         getContentPane().add(contentArea, java.awt.BorderLayout.CENTER);
+
         pack();
         setLocationRelativeTo(null);
-
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLaporanActionPerformed
+
+    private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnKeluarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler boxSpacer;
     private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnKendaraan;
     private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMasuk;
     private javax.swing.JButton btnPetugas;
+    private javax.swing.JButton btnPrint;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUser;
     private javax.swing.JPanel contentArea;
-    private javax.swing.JPanel sidebarPanel;
+    private com.toedter.calendar.JDateChooser dateEnd;
+    private com.toedter.calendar.JDateChooser dateStart;
+    private javax.swing.JPanel filterCard;
+    private javax.swing.JPanel headerPanel;
+    private javax.swing.JPanel headerRightPanel;
+    private javax.swing.JPanel infoGrid;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAppTitle;
     private javax.swing.JLabel lblClock;
+    private javax.swing.JLabel lblContentTitle;
+    private javax.swing.JLabel lblEnd;
     private javax.swing.JLabel lblHeaderTitle;
+    private javax.swing.JLabel lblRevTitle;
+    private javax.swing.JLabel lblSearchPlat;
+    private javax.swing.JLabel lblStart;
+    private javax.swing.JLabel lblTotalRevenue;
+    private javax.swing.JLabel lblTotalTransactions;
+    private javax.swing.JLabel lblTransTitle;
     private javax.swing.JLabel lblUser;
-    private javax.swing.JPanel headerPanel;
-    private javax.swing.JPanel headerRightPanel;
+    private javax.swing.JPanel mainSplitPanel;
+    private javax.swing.JPanel revCard;
+    private javax.swing.JPanel sidebarPanel;
+    private javax.swing.JPanel summaryPanel;
+    private javax.swing.JPanel tableCard;
+    private javax.swing.JTable tblLaporan;
+    private javax.swing.JPanel titlePanel;
+    private javax.swing.JPanel transCard;
+    private javax.swing.JTextField txtSearchPlat;
     // End of variables declaration//GEN-END:variables
     
 }

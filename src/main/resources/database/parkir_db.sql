@@ -120,8 +120,6 @@ INSERT INTO kendaraan (jenis_kendaraan, tarif_awal, tarif_per_jam, status) VALUE
 
 -- Transaksi Parkir (contoh data)
 INSERT INTO transaksi_parkir (plat_nomor, id_kendaraan, jam_masuk, jam_keluar, durasi_jam, tarif_awal, tarif_per_jam, total_biaya, id_petugas_masuk, id_petugas_keluar, status) VALUES
-('B 1234 ABC', 1, '2026-06-12 08:00:00', '2026-06-12 10:00:00', 2, 3000, 2000, 5000, 1, 2, 'KELUAR'),
-('B 5678 DEF', 2, '2026-06-12 09:00:00', '2026-06-12 12:00:00', 3, 5000, 3000, 11000, 1, 2, 'KELUAR'),
-('D 9012 GHI', 1, '2026-06-12 10:00:00', '2026-06-12 11:00:00', 1, 3000, 2000, 3000, 2, 1, 'KELUAR'),
-('F 3456 JKL', 3, '2026-06-12 07:00:00', '2026-06-12 12:00:00', 5, 10000, 5000, 30000, 1, 2, 'KELUAR'),
-('B 7890 MNO', 2, '2026-06-12 14:00:00', NULL, 0, 5000, 3000, 0, 2, NULL, 'MASUK');
+('B 1234 ABC', 1, DATE_SUB(NOW(), INTERVAL 6 HOUR), DATE_SUB(NOW(), INTERVAL 4 HOUR), 2, 3000, 2000, 5000, 1, 2, 'KELUAR'),
+('B 5678 DEF', 2, DATE_SUB(NOW(), INTERVAL 5 HOUR), DATE_SUB(NOW(), INTERVAL 2 HOUR), 3, 5000, 3000, 11000, 1, 2, 'KELUAR'),
+('B 7890 MNO', 2, DATE_SUB(NOW(), INTERVAL 1 HOUR), NULL, 0, 5000, 3000, 0, 2, NULL, 'MASUK');

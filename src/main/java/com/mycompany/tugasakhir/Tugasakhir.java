@@ -18,7 +18,7 @@ import javax.swing.*;
 public class Tugasakhir {
 
     private static boolean isDatabaseRunning() {
-        try (java.net.Socket socket = new java.net.Socket("localhost", 3306)) {
+        try (java.net.Socket socket = new java.net.Socket("localhost", 3307)) {
             return true;
         } catch (java.io.IOException e) {
             return false;
@@ -27,7 +27,7 @@ public class Tugasakhir {
 
     private static void startDatabaseAuto() {
         if (isDatabaseRunning()) {
-            System.out.println("[System] Database server MySQL sudah aktif (Port 3306). Tidak perlu menjalankan ulang.");
+            System.out.println("[System] Database server MySQL sudah aktif (Port 3307). Tidak perlu menjalankan ulang.");
             return;
         }
 

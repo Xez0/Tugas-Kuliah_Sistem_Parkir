@@ -21,39 +21,8 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
     
     private com.mycompany.tugasakhir.model.TransaksiParkir activeTransaksi;
 
-    // UI elements declared in form
-    private javax.swing.JLabel lblSearchTitle;
-    private javax.swing.JPanel searchBarPanel;
-    private javax.swing.JTextField txtCariPlat;
-    private javax.swing.JButton btnCari;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lblPlat;
-    private javax.swing.JTextField txtPlatNomor;
-    private javax.swing.JLabel lblJenis;
-    private javax.swing.JTextField txtJenis;
-    private javax.swing.JLabel lblJamMasuk;
-    private javax.swing.JTextField txtJamMasuk;
-    private javax.swing.JLabel lblJamKeluar;
-    private javax.swing.JTextField txtJamKeluar;
-    private javax.swing.JLabel lblDurasi;
-    private javax.swing.JTextField txtDurasi;
-    private javax.swing.JLabel lblTotal;
-    private javax.swing.JTextField txtTotalBiaya;
     private javax.swing.JLabel lblPetugasLabel;
     private javax.swing.JComboBox<com.mycompany.tugasakhir.model.Petugas> cbPetugasKeluar;
-    private javax.swing.Box.Filler formSpacer;
-    private javax.swing.JPanel buttonPanel;
-    private javax.swing.JButton btnProsesKeluar;
-    private javax.swing.JButton btnCetakStruk;
-    private javax.swing.JButton btnReset;
-    private javax.swing.JPanel formCard;
-    private javax.swing.JPanel receiptCard;
-    private javax.swing.JLabel lblReceiptHeader;
-    private javax.swing.JScrollPane receiptScroll;
-    private javax.swing.JTextArea txtStrukArea;
-    private javax.swing.JPanel mainSplitPanel;
-    private javax.swing.JPanel titlePanel;
-    private javax.swing.JLabel lblContentTitle;
 
     // delegation methods
     public void resetForm() {
@@ -137,7 +106,50 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
     }
 
     private void customInit() {
+        java.awt.GridBagConstraints gridBagConstraints;
         
+        // Initialize petugas combo (not in form designer)
+        lblPetugasLabel = new javax.swing.JLabel("Petugas Keluar");
+        cbPetugasKeluar = new javax.swing.JComboBox<>();
+        cbPetugasKeluar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        cbPetugasKeluar.setPreferredSize(new Dimension(0, 38));
+
+        // Remove and re-add formSpacer and buttonPanel with shifted gridy
+        formCard.remove(formSpacer);
+        formCard.remove(buttonPanel);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 15;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
+        formCard.add(lblPetugasLabel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(cbPetugasKeluar, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 17;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        formCard.add(formSpacer, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 5, 0);
+        formCard.add(buttonPanel, gridBagConstraints);
+
         // Set colors and design
         btnCari.setBackground(new Color(15, 52, 96));
         btnCari.setForeground(Color.WHITE);
@@ -303,6 +315,36 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         boxSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         btnLogout = new javax.swing.JButton();
         contentArea = new javax.swing.JPanel();
+        titlePanel = new javax.swing.JPanel();
+        lblContentTitle = new javax.swing.JLabel();
+        mainSplitPanel = new javax.swing.JPanel();
+        formCard = new javax.swing.JPanel();
+        lblSearchTitle = new javax.swing.JLabel();
+        searchBarPanel = new javax.swing.JPanel();
+        txtCariPlat = new javax.swing.JTextField();
+        btnCari = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
+        lblPlat = new javax.swing.JLabel();
+        txtPlatNomor = new javax.swing.JTextField();
+        lblJenis = new javax.swing.JLabel();
+        txtJenis = new javax.swing.JTextField();
+        lblJamMasuk = new javax.swing.JLabel();
+        txtJamMasuk = new javax.swing.JTextField();
+        lblJamKeluar = new javax.swing.JLabel();
+        txtJamKeluar = new javax.swing.JTextField();
+        lblDurasi = new javax.swing.JLabel();
+        txtDurasi = new javax.swing.JTextField();
+        lblTotal = new javax.swing.JLabel();
+        txtTotalBiaya = new javax.swing.JTextField();
+        formSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        buttonPanel = new javax.swing.JPanel();
+        btnProsesKeluar = new javax.swing.JButton();
+        btnCetakStruk = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
+        receiptCard = new javax.swing.JPanel();
+        lblReceiptHeader = new javax.swing.JLabel();
+        receiptScroll = new javax.swing.JScrollPane();
+        txtStrukArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Parkir Desktop - Parkir Keluar");
@@ -394,14 +436,8 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         sidebarPanel.add(btnKendaraan, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-
         btnPetugas.setText("Kelola Petugas");
+        btnPetugas.addActionListener(this::btnPetugasActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
@@ -430,12 +466,13 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weighty = 1.0;
         sidebarPanel.add(boxSpacer, gridBagConstraints);
 
         btnLogout.setBackground(new java.awt.Color(233, 69, 96));
         btnLogout.setText("Keluar (Logout)");
+        btnLogout.addActionListener(this::btnLogoutActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
@@ -449,38 +486,6 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         contentArea.setBackground(new java.awt.Color(240, 242, 245));
         contentArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         contentArea.setLayout(new java.awt.BorderLayout());
-
-        
-        titlePanel = new javax.swing.JPanel();
-        lblContentTitle = new javax.swing.JLabel();
-        mainSplitPanel = new javax.swing.JPanel();
-        formCard = new javax.swing.JPanel();
-        lblSearchTitle = new javax.swing.JLabel();
-        searchBarPanel = new javax.swing.JPanel();
-        txtCariPlat = new javax.swing.JTextField();
-        btnCari = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JSeparator();
-        lblPlat = new javax.swing.JLabel();
-        txtPlatNomor = new javax.swing.JTextField();
-        lblJenis = new javax.swing.JLabel();
-        txtJenis = new javax.swing.JTextField();
-        lblJamMasuk = new javax.swing.JLabel();
-        txtJamMasuk = new javax.swing.JTextField();
-        lblJamKeluar = new javax.swing.JLabel();
-        txtJamKeluar = new javax.swing.JTextField();
-        lblDurasi = new javax.swing.JLabel();
-        txtDurasi = new javax.swing.JTextField();
-        lblTotal = new javax.swing.JLabel();
-        txtTotalBiaya = new javax.swing.JTextField();
-        formSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        buttonPanel = new javax.swing.JPanel();
-        btnProsesKeluar = new javax.swing.JButton();
-        btnCetakStruk = new javax.swing.JButton();
-        btnReset = new javax.swing.JButton();
-        receiptCard = new javax.swing.JPanel();
-        lblReceiptHeader = new javax.swing.JLabel();
-        receiptScroll = new javax.swing.JScrollPane();
-        txtStrukArea = new javax.swing.JTextArea();
 
         titlePanel.setOpaque(false);
         titlePanel.setPreferredSize(new java.awt.Dimension(0, 40));
@@ -497,12 +502,13 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         mainSplitPanel.setLayout(new java.awt.GridLayout(1, 2, 20, 20));
 
         formCard.setBackground(new java.awt.Color(255, 255, 255));
-        formCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+        formCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         formCard.setLayout(new java.awt.GridBagLayout());
 
         lblSearchTitle.setText("Cari Plat Nomor Aktif");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
@@ -521,14 +527,15 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         searchBarPanel.add(btnCari, java.awt.BorderLayout.EAST);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         formCard.add(searchBarPanel, gridBagConstraints);
-        
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
@@ -536,83 +543,105 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
 
         lblPlat.setText("Plat Nomor");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         formCard.add(lblPlat, gridBagConstraints);
 
         txtPlatNomor.setEnabled(false);
         txtPlatNomor.setPreferredSize(new java.awt.Dimension(0, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 0);
         formCard.add(txtPlatNomor, gridBagConstraints);
 
         lblJenis.setText("Jenis Kendaraan");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         formCard.add(lblJenis, gridBagConstraints);
 
         txtJenis.setEnabled(false);
         txtJenis.setPreferredSize(new java.awt.Dimension(0, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 0);
         formCard.add(txtJenis, gridBagConstraints);
 
         lblJamMasuk.setText("Jam Masuk");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         formCard.add(lblJamMasuk, gridBagConstraints);
 
         txtJamMasuk.setEnabled(false);
         txtJamMasuk.setPreferredSize(new java.awt.Dimension(0, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 0);
         formCard.add(txtJamMasuk, gridBagConstraints);
 
         lblJamKeluar.setText("Jam Keluar (Sekarang)");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         formCard.add(lblJamKeluar, gridBagConstraints);
 
         txtJamKeluar.setEnabled(false);
         txtJamKeluar.setPreferredSize(new java.awt.Dimension(0, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 0);
         formCard.add(txtJamKeluar, gridBagConstraints);
 
         lblDurasi.setText("Durasi Parkir (Ceiling Jam)");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         formCard.add(lblDurasi, gridBagConstraints);
 
         txtDurasi.setEnabled(false);
         txtDurasi.setPreferredSize(new java.awt.Dimension(0, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 0);
         formCard.add(txtDurasi, gridBagConstraints);
 
         lblTotal.setText("Total Biaya Parkir");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         formCard.add(lblTotal, gridBagConstraints);
 
@@ -620,31 +649,16 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         txtTotalBiaya.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtTotalBiaya.setPreferredSize(new java.awt.Dimension(0, 35));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         formCard.add(txtTotalBiaya, gridBagConstraints);
-
-        lblPetugasLabel = new javax.swing.JLabel();
-        lblPetugasLabel.setText("Petugas Keluar");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 15;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
-        formCard.add(lblPetugasLabel, gridBagConstraints);
-
-        cbPetugasKeluar = new javax.swing.JComboBox<>();
-        cbPetugasKeluar.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        cbPetugasKeluar.setPreferredSize(new java.awt.Dimension(0, 38));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 16;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
-        formCard.add(cbPetugasKeluar, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 17;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 15;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         formCard.add(formSpacer, gridBagConstraints);
@@ -662,7 +676,8 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         buttonPanel.add(btnReset);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 5, 0);
@@ -671,8 +686,8 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         mainSplitPanel.add(formCard);
 
         receiptCard.setBackground(new java.awt.Color(45, 52, 54));
-        receiptCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
-        receiptCard.setLayout(new java.awt.BorderLayout(10, 10));
+        receiptCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        receiptCard.setLayout(new java.awt.BorderLayout());
 
         lblReceiptHeader.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lblReceiptHeader.setForeground(new java.awt.Color(255, 255, 255));
@@ -690,16 +705,25 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
         mainSplitPanel.add(receiptCard);
 
         contentArea.add(mainSplitPanel, java.awt.BorderLayout.CENTER);
-    
-        
+
         getContentPane().add(contentArea, java.awt.BorderLayout.CENTER);
+
         pack();
         setLocationRelativeTo(null);
-
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetugasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPetugasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler boxSpacer;
+    private javax.swing.JButton btnCari;
+    private javax.swing.JButton btnCetakStruk;
     private javax.swing.JButton btnDashboard;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnKendaraan;
@@ -707,16 +731,44 @@ public class NewTransaksiKeluarView extends javax.swing.JFrame {
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMasuk;
     private javax.swing.JButton btnPetugas;
+    private javax.swing.JButton btnProsesKeluar;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUser;
+    private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel contentArea;
-    private javax.swing.JPanel sidebarPanel;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblAppTitle;
-    private javax.swing.JLabel lblClock;
-    private javax.swing.JLabel lblHeaderTitle;
-    private javax.swing.JLabel lblUser;
+    private javax.swing.JPanel formCard;
+    private javax.swing.Box.Filler formSpacer;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JPanel headerRightPanel;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblAppTitle;
+    private javax.swing.JLabel lblClock;
+    private javax.swing.JLabel lblContentTitle;
+    private javax.swing.JLabel lblDurasi;
+    private javax.swing.JLabel lblHeaderTitle;
+    private javax.swing.JLabel lblJamKeluar;
+    private javax.swing.JLabel lblJamMasuk;
+    private javax.swing.JLabel lblJenis;
+    private javax.swing.JLabel lblPlat;
+    private javax.swing.JLabel lblReceiptHeader;
+    private javax.swing.JLabel lblSearchTitle;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JLabel lblUser;
+    private javax.swing.JPanel mainSplitPanel;
+    private javax.swing.JPanel receiptCard;
+    private javax.swing.JScrollPane receiptScroll;
+    private javax.swing.JPanel searchBarPanel;
+    private javax.swing.JPanel sidebarPanel;
+    private javax.swing.JPanel titlePanel;
+    private javax.swing.JTextField txtCariPlat;
+    private javax.swing.JTextField txtDurasi;
+    private javax.swing.JTextField txtJamKeluar;
+    private javax.swing.JTextField txtJamMasuk;
+    private javax.swing.JTextField txtJenis;
+    private javax.swing.JTextField txtPlatNomor;
+    private javax.swing.JTextArea txtStrukArea;
+    private javax.swing.JTextField txtTotalBiaya;
     // End of variables declaration//GEN-END:variables
     
 }

@@ -31,7 +31,20 @@ public class TransaksiParkirService {
     // Dashboard stats
     public int countActiveParking() { return transaksiDAO.countActiveParking(); }
     public int countTodayTransactions() { return transaksiDAO.countTodayTransactions(); }
-    public double getTodayRevenue() { return transaksiDAO.getTodayRevenue(); }
+    public double getTodayRevenue() {
+        List<TransaksiParkir> todayTrans = getByDateRange(LocalDate.now(), LocalDate.now());
+        double total = 0;
+        for (TransaksiParkir t : todayTrans) {
+            if ("KELUAR".equals(t.getStatus())) {
+                total += t.getTotalBiaya();
+            } else {
+                int runningDurasi = DateTimeUtil.hitungDurasiJam(t.getJamMasuk(), LocalDateTime.now());
+                if (runningDurasi == 0) runningDurasi = 1;
+                total += t.getTarifAwal() + (Math.max(0, runningDurasi - 1) * t.getTarifPerJam());
+            }
+        }
+        return total;
+    }
     public double getRevenueByDateRange(LocalDate start, LocalDate end) { return transaksiDAO.getRevenueByDateRange(start, end); }
 
     /**

@@ -24,13 +24,6 @@ public class NewPetugasView extends javax.swing.JFrame {
     
     private DefaultTableModel tableModel;
     
-    private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtNama;
-    private javax.swing.JTextField txtUsername;
-    private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JComboBox<String> cbRole;
-    private javax.swing.JTextField txtNoTelp;
-    private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JLabel lblPasswordHint;
 
     
@@ -157,7 +150,19 @@ public class NewPetugasView extends javax.swing.JFrame {
             }
         });
 
-            }
+        // Initialize combo items because the NetBeans GUI builder generates empty JComboBoxes
+        if (cbRole != null) {
+            cbRole.removeAllItems();
+            cbRole.addItem("OPERATOR");
+            cbRole.addItem("ADMIN");
+        }
+        
+        if (cbStatus != null) {
+            cbStatus.removeAllItems();
+            cbStatus.addItem("AKTIF");
+            cbStatus.addItem("NONAKTIF");
+        }
+    }
 
     private void initNavButtonStyles() {
         JButton[] buttons = {btnDashboard, btnMasuk, btnKeluar, btnKendaraan, btnPetugas, btnUser, btnLaporan, btnLogout};
@@ -296,6 +301,35 @@ public class NewPetugasView extends javax.swing.JFrame {
         boxSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         btnLogout = new javax.swing.JButton();
         contentArea = new javax.swing.JPanel();
+        titlePanel = new javax.swing.JPanel();
+        lblContentTitle = new javax.swing.JLabel();
+        mainSplitPanel = new javax.swing.JPanel();
+        formCard = new javax.swing.JPanel();
+        lblId = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        lblNama = new javax.swing.JLabel();
+        txtNama = new javax.swing.JTextField();
+        lblUsername = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        lblPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
+        lblRole = new javax.swing.JLabel();
+        cbRole = new javax.swing.JComboBox();
+        lblNoTelp = new javax.swing.JLabel();
+        txtNoTelp = new javax.swing.JTextField();
+        lblStatus = new javax.swing.JLabel();
+        cbStatus = new javax.swing.JComboBox();
+        formSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        buttonPanel = new javax.swing.JPanel();
+        btnSave = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
+        tableCard = new javax.swing.JPanel();
+        searchPanel = new javax.swing.JPanel();
+        txtSearch = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblData = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kelola Data Petugas Parkir");
@@ -387,14 +421,8 @@ public class NewPetugasView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         sidebarPanel.add(btnKendaraan, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-
         btnPetugas.setText("Kelola Petugas");
+        btnPetugas.addActionListener(this::btnPetugasActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
@@ -423,7 +451,7 @@ public class NewPetugasView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weighty = 1.0;
         sidebarPanel.add(boxSpacer, gridBagConstraints);
 
@@ -443,23 +471,6 @@ public class NewPetugasView extends javax.swing.JFrame {
         contentArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         contentArea.setLayout(new java.awt.BorderLayout());
 
-        
-        titlePanel = new javax.swing.JPanel();
-        lblContentTitle = new javax.swing.JLabel();
-        mainSplitPanel = new javax.swing.JPanel();
-        formCard = new javax.swing.JPanel();
-        formSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        buttonPanel = new javax.swing.JPanel();
-        btnSave = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnReset = new javax.swing.JButton();
-        tableCard = new javax.swing.JPanel();
-        searchPanel = new javax.swing.JPanel();
-        txtSearch = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblData = new javax.swing.JTable();
-
         titlePanel.setOpaque(false);
         titlePanel.setPreferredSize(new java.awt.Dimension(0, 40));
         titlePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
@@ -475,17 +486,140 @@ public class NewPetugasView extends javax.swing.JFrame {
         mainSplitPanel.setLayout(new java.awt.BorderLayout(15, 15));
 
         formCard.setBackground(new java.awt.Color(255, 255, 255));
-        formCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20)));
         formCard.setPreferredSize(new java.awt.Dimension(340, 0));
+        formCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         formCard.setLayout(new java.awt.GridBagLayout());
 
-        // Field specific initializations will run programmatically
-        initCustomFields();
+        lblId.setText("ID Petugas (Otomatis)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblId, gridBagConstraints);
 
+        txtId.setEnabled(false);
+        txtId.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtId, gridBagConstraints);
+
+        lblNama.setText("Nama Lengkap");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblNama, gridBagConstraints);
+
+        txtNama.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtNama, gridBagConstraints);
+
+        lblUsername.setText("Username");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblUsername, gridBagConstraints);
+
+        txtUsername.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtUsername, gridBagConstraints);
+
+        lblPassword.setText("Password");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblPassword, gridBagConstraints);
+
+        txtPassword.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtPassword, gridBagConstraints);
+
+        lblRole.setText("Role");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblRole, gridBagConstraints);
+
+        cbRole.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(cbRole, gridBagConstraints);
+
+        lblNoTelp.setText("No. Telepon");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblNoTelp, gridBagConstraints);
+
+        txtNoTelp.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtNoTelp, gridBagConstraints);
+
+        lblStatus.setText("Status");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblStatus, gridBagConstraints);
+
+        cbStatus.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 13;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(cbStatus, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 14;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         formCard.add(formSpacer, gridBagConstraints);
@@ -513,12 +647,14 @@ public class NewPetugasView extends javax.swing.JFrame {
         mainSplitPanel.add(formCard, java.awt.BorderLayout.WEST);
 
         tableCard.setBackground(new java.awt.Color(255, 255, 255));
-        tableCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+        tableCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         tableCard.setLayout(new java.awt.BorderLayout(10, 10));
 
         searchPanel.setOpaque(false);
         searchPanel.setLayout(new java.awt.BorderLayout(5, 5));
-        searchPanel.add(txtSearch, java.awt.BorderLayout.CENTER);
+
+        txtSearch.setPreferredSize(new java.awt.Dimension(200, 36));
+        searchPanel.add(txtSearch);
 
         btnSearch.setText("CARI");
         btnSearch.setPreferredSize(new java.awt.Dimension(95, 36));
@@ -527,7 +663,9 @@ public class NewPetugasView extends javax.swing.JFrame {
         tableCard.add(searchPanel, java.awt.BorderLayout.NORTH);
 
         tblData.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
+            new Object [][] {
+
+            },
             new String [] {
                 "ID", "Nama Lengkap", "Username", "Role", "No. Telp", "Status"
             }
@@ -535,6 +673,7 @@ public class NewPetugasView extends javax.swing.JFrame {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
+
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -546,113 +685,36 @@ public class NewPetugasView extends javax.swing.JFrame {
         mainSplitPanel.add(tableCard, java.awt.BorderLayout.CENTER);
 
         contentArea.add(mainSplitPanel, java.awt.BorderLayout.CENTER);
-    
-        
+
         getContentPane().add(contentArea, java.awt.BorderLayout.CENTER);
+
         pack();
         setLocationRelativeTo(null);
-
     }// </editor-fold>//GEN-END:initComponents
 
-    private void initCustomFields() {
-        java.awt.GridBagConstraints gridBagConstraints;
-        // Dynamic initialization of inputs to hook Swing builder
-        
-        // Alignment moved to customInit()
+    private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetugasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPetugasActionPerformed
 
-
-        tblData.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int selectedRow = tblData.getSelectedRow();
-                if (selectedRow != -1) {
-                    fillFormFromSelectedRow(selectedRow);
-                }
-            }
-        });
-
-        txtId = new javax.swing.JTextField();
-        txtId.setEnabled(false);
-        txtId.setPreferredSize(new Dimension(0, 32));
-        
-        txtNama = new javax.swing.JTextField();
-        txtNama.setPreferredSize(new Dimension(0, 32));
-        
-        txtUsername = new javax.swing.JTextField();
-        txtUsername.setPreferredSize(new Dimension(0, 32));
-        
-        txtPassword = new javax.swing.JPasswordField();
-        txtPassword.setPreferredSize(new Dimension(0, 32));
-        
-        cbRole = new javax.swing.JComboBox<>(new String[]{"OPERATOR", "ADMIN"});
-        cbRole.setPreferredSize(new Dimension(0, 32));
-        
-        txtNoTelp = new javax.swing.JTextField();
-        txtNoTelp.setPreferredSize(new Dimension(0, 32));
-        
-        cbStatus = new javax.swing.JComboBox<>(new String[]{"AKTIF", "NONAKTIF"});
-        cbStatus.setPreferredSize(new Dimension(0, 32));
-
-        lblPasswordHint = new javax.swing.JLabel("Password");
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0; gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4,0,4,0);
-        formCard.add(new javax.swing.JLabel("ID Petugas (Otomatis)"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 1;
-        formCard.add(txtId, gridBagConstraints);
-
-        gridBagConstraints.gridy = 2;
-        formCard.add(new javax.swing.JLabel("Nama Lengkap"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 3;
-        formCard.add(txtNama, gridBagConstraints);
-
-        gridBagConstraints.gridy = 4;
-        formCard.add(new javax.swing.JLabel("Username"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 5;
-        formCard.add(txtUsername, gridBagConstraints);
-
-        gridBagConstraints.gridy = 6;
-        formCard.add(lblPasswordHint, gridBagConstraints);
-
-        gridBagConstraints.gridy = 7;
-        formCard.add(txtPassword, gridBagConstraints);
-
-        gridBagConstraints.gridy = 8;
-        formCard.add(new javax.swing.JLabel("Role"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 9;
-        formCard.add(cbRole, gridBagConstraints);
-
-        gridBagConstraints.gridy = 10;
-        formCard.add(new javax.swing.JLabel("No. Telepon"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 11;
-        formCard.add(txtNoTelp, gridBagConstraints);
-
-        gridBagConstraints.gridy = 12;
-        formCard.add(new javax.swing.JLabel("Status"), gridBagConstraints);
-
-        gridBagConstraints.gridy = 13;
-        formCard.add(cbStatus, gridBagConstraints);
-
-    }
+    // initCustomFields removed because form XML now handles it.
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler boxSpacer;
     private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnKendaraan;
     private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMasuk;
     private javax.swing.JButton btnPetugas;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUser;
+    private javax.swing.JPanel buttonPanel;
+    private javax.swing.JComboBox cbRole;
+    private javax.swing.JComboBox cbStatus;
     private javax.swing.JPanel contentArea;
     private javax.swing.JPanel formCard;
     private javax.swing.Box.Filler formSpacer;
@@ -664,19 +726,26 @@ public class NewPetugasView extends javax.swing.JFrame {
     private javax.swing.JLabel lblClock;
     private javax.swing.JLabel lblContentTitle;
     private javax.swing.JLabel lblHeaderTitle;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblNama;
+    private javax.swing.JLabel lblNoTelp;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblRole;
+    private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblUser;
-    private javax.swing.JPanel sidebarPanel;
-    private javax.swing.JPanel titlePanel;
+    private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel mainSplitPanel;
-    private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel searchPanel;
+    private javax.swing.JPanel sidebarPanel;
     private javax.swing.JPanel tableCard;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnReset;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JTextField txtSearch;
     private javax.swing.JTable tblData;
+    private javax.swing.JPanel titlePanel;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtNoTelp;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
     
 }

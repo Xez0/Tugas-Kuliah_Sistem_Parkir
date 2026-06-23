@@ -43,7 +43,15 @@ public class NewDashboardView extends javax.swing.JFrame {
         for (com.mycompany.tugasakhir.model.TransaksiParkir t : list) {
             String formatMasuk = com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(t.getJamMasuk());
             String formatKeluar = com.mycompany.tugasakhir.util.DateTimeUtil.formatDisplay(t.getJamKeluar());
-            String biaya = t.getStatus().equals("KELUAR") ? com.mycompany.tugasakhir.util.CurrencyUtil.formatRupiah(t.getTotalBiaya()) : "-";
+            double biayaValue = 0.0;
+            if (t.getStatus().equals("KELUAR")) {
+                biayaValue = t.getTotalBiaya();
+            } else {
+                int runningDurasi = com.mycompany.tugasakhir.util.DateTimeUtil.hitungDurasiJam(t.getJamMasuk(), com.mycompany.tugasakhir.util.DateTimeUtil.now());
+                if (runningDurasi == 0) runningDurasi = 1;
+                biayaValue = t.getTarifAwal() + (Math.max(0, runningDurasi - 1) * t.getTarifPerJam());
+            }
+            String biaya = com.mycompany.tugasakhir.util.CurrencyUtil.formatRupiah(biayaValue);
             
             tableModel.addRow(new Object[]{
                     t.getIdTransaksi(),
@@ -333,6 +341,7 @@ public class NewDashboardView extends javax.swing.JFrame {
         sidebarPanel.add(jSeparator1, gridBagConstraints);
 
         btnDashboard.setText("Dashboard");
+        btnDashboard.addActionListener(this::btnDashboardActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -342,6 +351,7 @@ public class NewDashboardView extends javax.swing.JFrame {
         sidebarPanel.add(btnDashboard, gridBagConstraints);
 
         btnMasuk.setText("Parkir Masuk");
+        btnMasuk.addActionListener(this::btnMasukActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -351,6 +361,7 @@ public class NewDashboardView extends javax.swing.JFrame {
         sidebarPanel.add(btnMasuk, gridBagConstraints);
 
         btnKeluar.setText("Parkir Keluar");
+        btnKeluar.addActionListener(this::btnKeluarActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -367,13 +378,6 @@ public class NewDashboardView extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         sidebarPanel.add(btnKendaraan, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
 
         btnPetugas.setText("Kelola Petugas");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -411,6 +415,7 @@ public class NewDashboardView extends javax.swing.JFrame {
 
         btnLogout.setBackground(new java.awt.Color(233, 69, 96));
         btnLogout.setText("Keluar (Logout)");
+        btnLogout.addActionListener(this::btnLogoutActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
@@ -515,7 +520,9 @@ public class NewDashboardView extends javax.swing.JFrame {
         tablePanel.add(lblTableTitle, java.awt.BorderLayout.NORTH);
 
         tblRecent.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
+            new Object [][] {
+
+            },
             new String [] {
                 "ID", "Plat Nomor", "Jenis Kendaraan", "Jam Masuk", "Jam Keluar", "Total Biaya", "Status"
             }
@@ -523,6 +530,7 @@ public class NewDashboardView extends javax.swing.JFrame {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
             };
+
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -544,6 +552,22 @@ public class NewDashboardView extends javax.swing.JFrame {
     private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnUserActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasukActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMasukActionPerformed
+
+    private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnKeluarActionPerformed
+
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDashboardActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler boxSpacer;

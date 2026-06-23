@@ -24,13 +24,6 @@ public class NewKendaraanView extends javax.swing.JFrame {
     
     private DefaultTableModel tableModel;
     
-    private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtJenis;
-    private javax.swing.JTextField txtTarifAwal;
-    private javax.swing.JTextField txtTarifPerJam;
-    private javax.swing.JComboBox<String> cbStatus;
-
-    
     // Delegation methods for CRUD views
     public void addSaveListener(ActionListener l) { btnSave.addActionListener(l); }
     public void addDeleteListener(ActionListener l) { btnDelete.addActionListener(l); }
@@ -152,8 +145,11 @@ public class NewKendaraanView extends javax.swing.JFrame {
             }
         });
         
-        // Add components to form card
-            }
+        // Populate combo box
+        cbStatus.removeAllItems();
+        cbStatus.addItem("AKTIF");
+        cbStatus.addItem("NONAKTIF");
+    }
 
     private void initNavButtonStyles() {
         JButton[] buttons = {btnDashboard, btnMasuk, btnKeluar, btnKendaraan, btnPetugas, btnUser, btnLaporan, btnLogout};
@@ -292,6 +288,31 @@ public class NewKendaraanView extends javax.swing.JFrame {
         boxSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         btnLogout = new javax.swing.JButton();
         contentArea = new javax.swing.JPanel();
+        titlePanel = new javax.swing.JPanel();
+        lblContentTitle = new javax.swing.JLabel();
+        mainSplitPanel = new javax.swing.JPanel();
+        formCard = new javax.swing.JPanel();
+        lblId = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        lblJenis = new javax.swing.JLabel();
+        txtJenis = new javax.swing.JTextField();
+        lblTarifAwal = new javax.swing.JLabel();
+        txtTarifAwal = new javax.swing.JTextField();
+        lblTarifPerJam = new javax.swing.JLabel();
+        txtTarifPerJam = new javax.swing.JTextField();
+        lblStatus = new javax.swing.JLabel();
+        cbStatus = new javax.swing.JComboBox<>();
+        formSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        buttonPanel = new javax.swing.JPanel();
+        btnSave = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
+        tableCard = new javax.swing.JPanel();
+        searchPanel = new javax.swing.JPanel();
+        txtSearch = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblData = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kelola Jenis Kendaraan & Tarif Awal");
@@ -375,6 +396,7 @@ public class NewKendaraanView extends javax.swing.JFrame {
         sidebarPanel.add(btnKeluar, gridBagConstraints);
 
         btnKendaraan.setText("Kelola Kendaraan");
+        btnKendaraan.addActionListener(this::btnKendaraanActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -382,13 +404,6 @@ public class NewKendaraanView extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         sidebarPanel.add(btnKendaraan, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
 
         btnPetugas.setText("Kelola Petugas");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -400,6 +415,7 @@ public class NewKendaraanView extends javax.swing.JFrame {
         sidebarPanel.add(btnPetugas, gridBagConstraints);
 
         btnUser.setText("Kelola User");
+        btnUser.addActionListener(this::btnUserActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -419,12 +435,13 @@ public class NewKendaraanView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weighty = 1.0;
         sidebarPanel.add(boxSpacer, gridBagConstraints);
 
         btnLogout.setBackground(new java.awt.Color(233, 69, 96));
         btnLogout.setText("Keluar (Logout)");
+        btnLogout.addActionListener(this::btnLogoutActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
@@ -438,23 +455,6 @@ public class NewKendaraanView extends javax.swing.JFrame {
         contentArea.setBackground(new java.awt.Color(240, 242, 245));
         contentArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         contentArea.setLayout(new java.awt.BorderLayout());
-
-        
-        titlePanel = new javax.swing.JPanel();
-        lblContentTitle = new javax.swing.JLabel();
-        mainSplitPanel = new javax.swing.JPanel();
-        formCard = new javax.swing.JPanel();
-        formSpacer = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        buttonPanel = new javax.swing.JPanel();
-        btnSave = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnReset = new javax.swing.JButton();
-        tableCard = new javax.swing.JPanel();
-        searchPanel = new javax.swing.JPanel();
-        txtSearch = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblData = new javax.swing.JTable();
 
         titlePanel.setOpaque(false);
         titlePanel.setPreferredSize(new java.awt.Dimension(0, 40));
@@ -471,17 +471,106 @@ public class NewKendaraanView extends javax.swing.JFrame {
         mainSplitPanel.setLayout(new java.awt.BorderLayout(15, 15));
 
         formCard.setBackground(new java.awt.Color(255, 255, 255));
-        formCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20)));
         formCard.setPreferredSize(new java.awt.Dimension(320, 0));
+        formCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         formCard.setLayout(new java.awt.GridBagLayout());
 
-        // Field specific initializations will run programmatically
-        initCustomFields();
+        lblId.setText("ID Kendaraan (Otomatis)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblId, gridBagConstraints);
 
+        txtId.setEnabled(false);
+        txtId.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtId, gridBagConstraints);
+
+        lblJenis.setText("Jenis Kendaraan");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblJenis, gridBagConstraints);
+
+        txtJenis.setPreferredSize(new java.awt.Dimension(0, 35));
+        txtJenis.addActionListener(this::txtJenisActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtJenis, gridBagConstraints);
+
+        lblTarifAwal.setText("Tarif Awal (Rp)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblTarifAwal, gridBagConstraints);
+
+        txtTarifAwal.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtTarifAwal, gridBagConstraints);
+
+        lblTarifPerJam.setText("Tarif Per Jam (Rp)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblTarifPerJam, gridBagConstraints);
+
+        txtTarifPerJam.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(txtTarifPerJam, gridBagConstraints);
+
+        lblStatus.setText("Status");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        formCard.add(lblStatus, gridBagConstraints);
+
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "" }));
+        cbStatus.setPreferredSize(new java.awt.Dimension(0, 35));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        formCard.add(cbStatus, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         formCard.add(formSpacer, gridBagConstraints);
@@ -509,12 +598,14 @@ public class NewKendaraanView extends javax.swing.JFrame {
         mainSplitPanel.add(formCard, java.awt.BorderLayout.WEST);
 
         tableCard.setBackground(new java.awt.Color(255, 255, 255));
-        tableCard.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(220, 220, 220)), javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+        tableCard.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         tableCard.setLayout(new java.awt.BorderLayout(10, 10));
 
         searchPanel.setOpaque(false);
         searchPanel.setLayout(new java.awt.BorderLayout(5, 5));
-        searchPanel.add(txtSearch, java.awt.BorderLayout.CENTER);
+
+        txtSearch.setPreferredSize(new java.awt.Dimension(200, 36));
+        searchPanel.add(txtSearch);
 
         btnSearch.setText("CARI");
         btnSearch.setPreferredSize(new java.awt.Dimension(95, 36));
@@ -523,7 +614,9 @@ public class NewKendaraanView extends javax.swing.JFrame {
         tableCard.add(searchPanel, java.awt.BorderLayout.NORTH);
 
         tblData.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
+            new Object [][] {
+
+            },
             new String [] {
                 "ID", "Jenis Kendaraan", "Tarif Awal", "Tarif Per Jam", "Status"
             }
@@ -531,6 +624,7 @@ public class NewKendaraanView extends javax.swing.JFrame {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
+
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -542,13 +636,28 @@ public class NewKendaraanView extends javax.swing.JFrame {
         mainSplitPanel.add(tableCard, java.awt.BorderLayout.CENTER);
 
         contentArea.add(mainSplitPanel, java.awt.BorderLayout.CENTER);
-    
-        
+
         getContentPane().add(contentArea, java.awt.BorderLayout.CENTER);
+
         pack();
         setLocationRelativeTo(null);
-
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnKendaraanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKendaraanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnKendaraanActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void txtJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJenisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtJenisActionPerformed
+
+    private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserActionPerformed
 
     private void initCustomFields() {
         java.awt.GridBagConstraints gridBagConstraints;
@@ -624,13 +733,19 @@ public class NewKendaraanView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler boxSpacer;
     private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnKendaraan;
     private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnMasuk;
     private javax.swing.JButton btnPetugas;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUser;
+    private javax.swing.JPanel buttonPanel;
+    private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JPanel contentArea;
     private javax.swing.JPanel formCard;
     private javax.swing.Box.Filler formSpacer;
@@ -642,19 +757,23 @@ public class NewKendaraanView extends javax.swing.JFrame {
     private javax.swing.JLabel lblClock;
     private javax.swing.JLabel lblContentTitle;
     private javax.swing.JLabel lblHeaderTitle;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblJenis;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblTarifAwal;
+    private javax.swing.JLabel lblTarifPerJam;
     private javax.swing.JLabel lblUser;
-    private javax.swing.JPanel sidebarPanel;
-    private javax.swing.JPanel titlePanel;
     private javax.swing.JPanel mainSplitPanel;
-    private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel searchPanel;
+    private javax.swing.JPanel sidebarPanel;
     private javax.swing.JPanel tableCard;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnReset;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JTextField txtSearch;
     private javax.swing.JTable tblData;
+    private javax.swing.JPanel titlePanel;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtJenis;
+    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtTarifAwal;
+    private javax.swing.JTextField txtTarifPerJam;
     // End of variables declaration//GEN-END:variables
     
 }
